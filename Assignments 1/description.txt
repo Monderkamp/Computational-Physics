@@ -1,4 +1,8 @@
 The exercises of this week (assignment one) are problem 1 and problem 2.
 
-The first problem is solved via a short c++ program that performs the numerical solutions to the function given in ex. 1 on arbitrary boundaries, which have to be specified via console input.
-When specified as 0.0 and 0.4 the program compares it with the exact solution given on the exercise sheet "erf(0.4)". The console application takes the user through the steps via instructions in the console. 
+The first problem is solved via a short c++ program that performs 
+the numerical solutions to the function given in ex. 1 on arbitrary 
+boundaries, which have to be specified via console input.
+When specified as 0.0 and 0.4 the program compares it with the exact solution given on the exercise
+sheet "erf(0.4)". The console application takes the user through 
+the steps via instructions in the console. 
