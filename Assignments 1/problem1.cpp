@@ -50,25 +50,73 @@ int main()
 	double xtrap[Ntrap];
 	double xsimp[Nsimp];
 	
-	
-	
-	double htrap = (double)(b-a)/(double)(Ntrap-1);
-
-	double hsimp = (double)(b-a)/(double)(Nsimp-1);
+	double htrap = (double)(b-a)/(double)(Ntrap);
+	double hsimp = (double)(b-a)/(double)(Nsimp);
 	
 	for (int i = 0;i<Ntrap;i++)
-	{
-		xtrap[i] = a + i*htrap;
-	}
+		{
+			xtrap[i] = a + i*htrap;
+		}
 	
-		for (int i = 0;i<Nsimp;i++)
-	{
-		xsimp[i] = a + i*hsimp;
-	}
+	for (int i = 0;i<Nsimp;i++)
+		{
+			xsimp[i] = a + i*hsimp;
+		}
 	
 	double solutiontrap = 0.0;
 	
-	cout << "The numerical solution to the integral with the given parameters is equal to " << solutiontrap << endl;
+	for (int i = 0; i<Ntrap;i++)
+		{
+			solutiontrap += (f(xtrap[i]) + f(xtrap[i+1]));
+		}
+		
+	solutiontrap *= (0.5*htrap);
 	
+	cout << "The numerical solution with the trapezoidal method to the integral with the given parameters is equal to " << solutiontrap << endl;
+		if (a == 0.0 && b == 0.4)
+		{
+			cout << "The exact value of the integral withing the given boundaries is: erf(0.4) = 0.428392" << endl;\
+			double u 	= fabs(solutiontrap - 0.428392);
+			double urel = fabs(solutiontrap - 0.428392)/0.428392;
+			
+			cout << "The corresponding absolute error is equal to " << u;
+			cout << " whereas the relative error is equal to " << urel << endl;
+		}
+	
+	double solutionsimp = 0.0;
+	double term		= 0.0;
+	
+	for (int i = 1; i<Nsimp/2;i++)
+		{
+			term += f(xsimp[2*i]);
+		}
+	
+	term	 		*= 2.0;
+	
+	solutionsimp 	= f(xsimp[0]) + term;
+	
+	term			= 0.0;
+	
+	for (int i = 1; i<=Nsimp/2;i++)
+		{
+			term += f(xsimp[2*i-1]);
+		}
+	
+	term	 		*= 4.0;
+	
+	solutionsimp += (term + f(xsimp[Nsimp]));
+	solutionsimp *= (hsimp/3.0);
+	
+	cout << "\nThe numerical solution with the Simpson method to the integral with the given parameters is equal to " << solutionsimp << endl;
+	if (a == 0.0 && b == 0.4)
+		{
+			cout << "The exact value of the integral withing the given boundaries is: erf(0.4) = 0.428392" << endl;\
+			double u 	= fabs(solutionsimp - 0.428392);
+			double urel = fabs(solutionsimp - 0.428392)/0.428392;
+				
+			cout << "The corresponding absolute error is equal to " << u;
+			cout << " whereas the relative error is equal to " << urel << endl;
+		
+		}
 	return 0;
 }
