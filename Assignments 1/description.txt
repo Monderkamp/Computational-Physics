@@ -6,6 +6,7 @@ boundaries, which have to be specified via console input.
 When specified as 0.0 and 0.4 the program compares it with the exact solution given on the 
 exercise sheet "erf(0.4)". The console application takes the user through 
 the steps via instructions in the console. 
+The filename is "problem1.cpp".
 
 Problem 2: a and b are solved on paper and with as little electronic assistance as possible.
 The numerical methods which are probed in b are used with a little more than an elaborate
@@ -13,4 +14,6 @@ pocket calculator.
 The scan of the solutions on paper can be found in the pdf: "Problem 2a,b.pdf".
 
 The additional questions to the coding exercises 2c,d can be found as comments below the text 
-files containing the corresponding code.
+files containing the corresponding code, which are called "problem2c.cpp" and "problem2d.cpp"
+
+Paul Monderkamp
