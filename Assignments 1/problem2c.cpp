@@ -42,17 +42,6 @@ getchar();
 return 0;
 }
 
-/*
-The observations from starting the
-Newton algorithm from different nodes that are equidistantly spaced on the [-4,4] are:
 
-- the major part of the samples in the lower half of the interval converges towards the root -1,
-when taken as starting points.
-- the major part of the samples in the upper half of the interval converges towards the root 2/3, 
-when taken as starting points.
--although having the shortest interval of starting points that converge towards this root,
-the iterations that converge towards x = 0 tend to converge faster. 
-- the intervals are not exclusive such that there are several nodes within a row 
-of sampled nodes that converge towards different roots than the surrounding nodes.
 
 */
