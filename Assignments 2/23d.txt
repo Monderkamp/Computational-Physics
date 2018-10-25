@@ -1,0 +1,10 @@
+quadrature: 0.995489
+boolsrule: 0.998921
+
+deviation from exact value:
+quadrature: -0.000166667
+boolsrule: -0.00359829
+
+relative error:
+quadrature: -1.67451e-19
+boolsrule: -3.6152e-18
