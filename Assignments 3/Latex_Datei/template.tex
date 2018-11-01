@@ -12,6 +12,7 @@
 %\usepackage{esvect}
 \usepackage{hyperref}
 \usepackage{amsmath}
+\usepackage{listings}
 \usepackage{subfigure}		%nützlich, wenn du mehrere Bilder in eine Bildumgebung packen möchtest
 \usepackage{tabularx}		%für tabellen
 \usepackage{chngcntr}
@@ -34,7 +35,7 @@
 \newcommand{\abs}[1]{\left\lvert#1\right\rvert}
 
 \begin{document}
-
+\setcounter{section}{2}
 
 \setlength{\parindent}{0pt}
 
@@ -48,7 +49,7 @@
 %	{\scshape\Large Spezialisierung\par}
 	\vspace{1.5cm}
 %	{\LARGE\bfseries working title\\wedge confinement in LC systems  \par}
-	{\LARGE\bfseries working title\\  \par}
+	{\LARGE\bfseries Assignment Sheet Nr. 3\\  \par}
 	\vspace{1cm}
 	
 	{\large	Paul Monderkamp, Matr.Nr. 2321677\par}
@@ -83,44 +84,63 @@
 \newpage
 
 
-\section{Introduction}
-%
-%%\\ (Bild mit 2-4 multi body systems)
-%%\\describe the physical system\\
-%%\\
-%Very often when observing systems of numerous identical bodies in nature, you can assign a certain degree of structure or ordering to the them. %apparent configuration. %//process//.
-%%Rarely does one observe either perfect order or complete disorder. 
-%It seems few systems are either completely ordered or on the other hand 
-%disordered and without any regularity. Observing for example driftwood %or floating reed 
-%on water surfaces (Fig 1.1, left) it seems %a majority of the sticks arrange such that there is a high amount of paralle
-%the individual sticks favour to be parallel to one another. Another example for this kind of structuring can be observed by simply spreading a single layer of rice on an even surface (Fig 1.1, right). %Without any apparent interacting forces the 
-%The rice grains arrange in a particular pattern, where the indivudial bodies form strings with approximate pairwise parallelity among the grains.\\
-%Even upon disturbance of the system, whereby all grains change position and orientation, this global occurence of this string orientation remains. This suggests that this string forming state is an intrinsic stable state of the system, in which the individual bodies prefer a certain orientation with respect to each other, eventhough there is no apparent interaction between them, other than the rice grains are hard bodies do not overlap.\\
-%
-%\begin{figure}[h!]		
-%\centering
-%{\includegraphics[width=1.0\textwidth]{macrLC3.jpeg}}		
-%\caption{
-%Driftwood on the Spirit Lake in the US federal state of Washington (left) [6] and uncooked rice grains spread evenly on a flat surface (right).}
-%\end{figure}
-%
-%Many types of systems in nature show similar structural behaviour, one of which are  so called liquid crystals which form the topic of this thesis. Liquid crystals derive their name directly from their characterizing physical properties. On the one hand, a liquid crystal is a fluid composed of many molecules, on the other hand this fluid shows global crystalline structure similar to the two dimensional examples which are given above [2]. \\
-%These types of phases are called \textit{mesomorphic\footnote{from ancient Greek meso meaning middle, morph meaning shape, form, structure} phases} or \textit{mesophases} [7] expressing their nature in between liquids and solids.
-%
-%\newpage
-%
-%Numerous phases are known well researched. Those phases are characterized by the relative positions, shape and orientations of the liquid molecules, some of which are for example so called \textit{nematic phases} in which the particles positions are generally unordered, but the orientation of the particles fluctuate around a common mean direction.\\
-%Other phases are called \textit{smectic phases} in which the fluid molecules roughly share the same direction and arrange in layers over the occupied space. \\
-%The deciding physical factors in the phase behaviour are the desity and the shape of the fluid molecules.\\
-%\\
-%The types of particles that are discussed in this thesis are spherocylindrical fluid molecules (Fig 1.2), which can be thought of as a cylinder with half-spherical caps at the ends. The diameter of the cylinder is called $\sigma$, whereas the ratio of the length of the particle (L + $\sigma$) to $\sigma$ is referred to as \textit{aspect ratio} $p$, such that $p = \frac{L}{\sigma} + 1$. %$L = p \sigma$.
-%
-%\begin{figure}[h!]		
-%\centering
-%{\includegraphics[width=0.5\textwidth]{sphcyl.png}}		
-%\caption{Spherocylinder [1]}
-%\end{figure}
-%
+\section{Exercise 3.1}
+\subsection*{Exercise 3.1 (a)}
+
+\begin{figure}[h!]		
+\centering
+{\includegraphics[width=0.8\textwidth]{3_1_a1.jpg}}		
+\caption{first part of the derivation of the formula}
+\end{figure}
+
+\newpage
+
+\begin{figure}[h!]		
+\centering
+{\includegraphics[width=0.8\textwidth]{3_1_a2.jpg}}		
+\caption{second part of the derivation of the formula}
+\end{figure}
+
+\newpage
+
+
+
+\subsection*{Exercise 3.1 (b)}
+\subsubsection*{Code}
+\lstinputlisting[language=c++]{3_1_b_main.cpp}
+%\lstinputlisting{3_1_b_main.cpp}
+\newpage
+
+\subsubsection*{Results}
+The following results are achived via the code in the previous subsection. 
+\begin{figure}[h!]		
+\centering
+{\includegraphics[width=1.0\textwidth]{1bx.png}}		
+\caption{time evolution of the x coordinate of the harmonic oscillator}
+\end{figure}
+
+Figure 3.3 shows the time evolution of the x coordinate of a one dimensional harmonic oscillator solved with the Runge-Kutta 4 scheme. There is no apparent divergence from the analytical solution visible in the timeframe of the simulation.
+
+
+
+\begin{figure}[h!]		
+\centering
+{\includegraphics[width=1.0\textwidth]{1bv.png}}		
+\caption{time evolution of the velocity of the harmonic oscillator}
+\end{figure}
+
+Figure 3.4 shows the time evolution of the velocity of a one dimensional harmonic oscillator solved with the Runge-Kutta 4 scheme. Similarly to the x coordinate, there is no visible instability in the timeframe of the simulation period. 
+
+\newpage
+
+\begin{figure}[h!]		
+\centering
+{\includegraphics[width=0.5\textwidth]{1bphasespace.png}}		
+\caption{phase space trajectory of the harmonic oscillator}
+\end{figure}
+
+Figure 3.5 shows the phase space profile for the simulation results above. The trajectory seems reasonably spherical. 
+
 %The two degrees of freedom for a constant number of particles that dictate the phase behaviour are in this case the volume fraction which is proportional to the density and the aspect ratio $p$.\\
 %
 %
