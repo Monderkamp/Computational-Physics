@@ -193,6 +193,87 @@ for (int i=0;i<N;i++)
 
 \subsubsection{Results}
 
+\begin{figure}[h!]		
+\centering
+{\includegraphics[width=0.7\textwidth]{3_2_b_thetaplots.png}}		
+\caption{$\theta$ olutions for eq. (2.1) solved with Euler-alg.}
+\end{figure}
+
+Figure 2.3 shows the plots of the solutions of the angle $\theta$ for the set of differential equations  (2.1) compared to the analytic solution. It already includes the plots from exercise (d) which corresponds to smaller timesteps. \\
+The x axis in all following plots of $\theta$ and $\omega$ is in units of time whereas all following phace space profiles have $\theta$ on the x axis and $\omega$ on the y axis. \\
+The most unstable solution which is the purple line corresponds to the biggest time step. This is to be expected since the instability scales with the size of the timestep. 
+
+\begin{figure}[h!]		
+\centering
+{\includegraphics[width=0.7\textwidth]{3_2_b_omegaplots.png}}		
+\caption{$\omega$ solutions for eq. (2.1) solved with Euler-alg.}
+\end{figure}
+
+In analogy Figure 2.4 shows the solutions for the angular velocity $\omega$.
+\newpage
+
+
+\begin{figure}[h!]		
+\centering
+{\includegraphics[width=0.7\textwidth]{3_2_b_enplot.png}}		
+\caption{Energy solutions for eq. (2.1) solved with Euler-alg.}
+\end{figure}
+
+
+
+Figure 2.5 shows the time evolution of the solutions for the energy according to the results above. Is has to be mentioned that the time span of the simulation runs from $t=0$ to $t = 50$. However the plots above only show partial ranges. This is due to the domination of the diverging solution with the biggest time step. Showing the results on the whole scale makes most of the lines indistinguishable. 
+
+
+\newpage
+
+
+\begin{figure}[h!]		
+\centering
+{\includegraphics[width=0.7\textwidth]{3_2_b_thetaplotsEC.png}}		
+\caption{$\theta$ solutions for eq. (2.1) solved with Euler-Cromer-alg.}
+\end{figure}
+Figure 2.6 shows the time propagation for the angle $\theta$ for the same equations as given by the Euler-Cromer algorithm. It is visible, that the amplitude does not converge with respect to the analytical solutions. However the solution with the biggest time step shows a phase shift. 
+
+\begin{figure}[h!]		
+\centering
+{\includegraphics[width=0.7\textwidth]{3_2_b_omegaplotsEC.png}}		
+\caption{$\omega$ solutions for eq. (2.1) solved with Euler-Cromer-alg.}
+\end{figure}
+
+The plots for the numerical solutions of the angular velocity have the same appearance and show the same properties. 
+
+\newpage
+
+\begin{figure}[h!]		
+\centering
+{\includegraphics[width=0.9\textwidth]{3_2_b_enplotsEC.png}}		
+\caption{Energy solutions for eq. (2.1) solved with Euler-Cromer-alg.}
+\end{figure}
+
+
+
+Figure 2.8 shows the Energy of the system as a function of time. As discussed in previous exercises and in the lecture, the energy of the shadow Hamiltonian oscillates around the constant energy of the analytic result. The amplitude of this oscillation grows with the time step, but stays bounded in contrast to the solutions of the usual Euler scheme. 
+
+\newpage
+
+
+
+\begin{figure}[h!]		
+\centering
+{\includegraphics[width=0.7\textwidth]{phasespaceprofiles.png}}		
+\caption{Phase space profiles for different starting angles $\theta_0$}
+\end{figure}
+
+Figures 2.9 and 2.10 show the phase space profiles for different initial angles $\theta_0$ and thus for different regimes: harmonic, oscillatory and rotational. The behaviour gets less harmonic, the bigger the amplitudes of the angles get. \\ 
+A starting angle of $\theta_0 = \pi$ would in principle correspond to an unstable equilibrium. After an infinitesimal displacement however the pendulum would swing in accordance to the light yellow line on the outside of the pendulum (fig 2.9).
+This energy level in space space divides the oscillatory energies from the rotational energies. The latter have enough energy to swing in circles around the whole range of the configuration angle $\theta$ and thus the system propagates along the $\theta$ axis of space space without generating bound states.  
+
+\begin{figure}[h!]		
+\centering
+{\includegraphics[width=0.7\textwidth]{phasespaceprofiles2.png}}		
+\caption{Phase space profiles for different starting angles $\theta_0$}
+\end{figure}
+
 %\begin{equation}
 %\begin{pmatrix}
 % 0.00227\\

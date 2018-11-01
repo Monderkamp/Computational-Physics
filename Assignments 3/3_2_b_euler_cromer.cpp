@@ -7,19 +7,19 @@ using namespace std;
 
 int main()
 {
-string timeinterval = "0_01";
+string timeinterval = "0_005_180";
 string outputfilename = "3_2b_eulercromer_dt_" + timeinterval + ".txt";
 
 double tmin = 0.0;
 double tmax = 50.0;
-double dt = 0.01;
+double dt = 0.005;
 
 int N = (int)(tmax - tmin)/dt + 1;
 
 double y[N][3];
 
-y[0][0] = (7.0/360.0)*2.0*M_PI;
-y[0][1] = 0.0;
+y[0][0] = (180.0/360.0)*2.0*M_PI;
+y[0][1] = -(10.0/360.0)*2.0*M_PI;
 y[0][2] = 50.0*y[0][1]*y[0][1]+100.0*(1.0-cos(y[0][0]));
 
 ofstream out;
