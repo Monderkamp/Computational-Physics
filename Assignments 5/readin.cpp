@@ -4,6 +4,7 @@
 
 #include <cmath>
 #include <fstream>
+#include <string>
 
 typedef vector<double> vouble; 
 
@@ -11,12 +12,12 @@ typedef vector<double> vouble;
 using namespace std;
 
 
-vector<double> readin(int &counter)
+vector<double> readin(int &counter, string filename)
 {
 vouble omega;
 
 
-ifstream in("noisy.txt");
+ifstream in(filename);
 double number;
 
 while (in >> number)
