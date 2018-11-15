@@ -5,6 +5,8 @@
 #include <cmath>
 #include <fstream>
 #include <string>
+#include <cstdio>
+#include <cstdlib>
 
 using namespace std;
 const double cutoff = pow(2.0,1.0/6.0);
@@ -74,9 +76,9 @@ vouble f_i(particle *p,int i, int N) // force on particle with index i
             double dx = p[i].get_x() - p[j].get_x();
             double dy = p[i].get_y() - p[j].get_y();
     	    if (dx > 7.0) {dx -= 14.0;}
-    	    if (dx < 7.0) {dx += 14.0;}
+    	    if (dx < -7.0) {dx += 14.0;}
     	    if (dy > 7.0) {dy -= 14.0;}
-    	    if (dy < 7.0) {dy += 14.0;}
+    	    if (dy < -7.0) {dy += 14.0;}
 
     	    double dr = sqrt(dx*dx+dy*dy);
     	    if (dr <= cutoff) 
@@ -93,17 +95,17 @@ double V_pot(particle *p, int N)
     double U = 0.0;
         for (int j=0; j<N;j++)
           {
-            for (int i=j;i<N;i++)
+            for (int i=j+1;i<N;i++)
      	      {
                 double dx = p[i].get_x() - p[j].get_x();
                 double dy = p[i].get_y() - p[j].get_y();
     	        if (dx > 7.0) {dx -= 14.0;}
-    	        if (dx < 7.0) {dx += 14.0;}
+    	        if (dx < -7.0) {dx += 14.0;}
     	        if (dy > 7.0) {dy -= 14.0;}
-    	        if (dy < 7.0) {dy += 14.0;}
+    	        if (dy < -7.0) {dy += 14.0;}
 
     	        double dr = sqrt(dx*dx+dy*dy);
-		cout << dr << endl;
+		//cout << dr << endl;
 
     	        if (dr <= cutoff) 
       	          {
@@ -116,10 +118,10 @@ double V_pot(particle *p, int N)
 
 int main()
   {
-    vouble pos_x = get_column("posdat2.txt",2,3);
-    vouble pos_y = get_column("posdat2.txt",3,3);
-    vouble vel_x = get_column("veldat2.txt",2,3);
-    vouble vel_y = get_column("veldat2.txt",3,3);
+    vouble pos_x = get_column("posdat2.txt",1,3);
+    vouble pos_y = get_column("posdat2.txt",2,3);
+    vouble vel_x = get_column("veldat2.txt",1,3);
+    vouble vel_y = get_column("veldat2.txt",2,3);
 
     const int N = pos_x.size(); 
     const double tmax = 10.0;
@@ -160,14 +162,14 @@ int main()
 	    p[i].set_vx(p[i].get_vx()+0.5*dt*f[0]);
 	    p[i].set_vy(p[i].get_vy()+0.5*dt*f[1]);
           }
-	//out << k << "  " <<V_pot(p,N) << endl;
-	//cout << k << "  " <<V_pot(p,N) << endl;
-	double pot = V_pot(p,N);	
+	out << k*dt << "  " <<V_pot(p,N) << endl;
+        cout << k << "  " <<V_pot(p,N) << endl;
+	
+		
       }
 
     out.close();
     delete[] p;
-    cout << "done" << endl;
     getchar();
 
     return 0;
