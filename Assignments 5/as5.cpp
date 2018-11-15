@@ -117,6 +117,14 @@ int main()
 	    vouble f = f_i(p,i,N);
             p[i].set_x(p[i].get_x() + dt*p[i].get_vx() + 0.5 * f[0] * dt*dt);
             p[i].set_y(p[i].get_y() + dt*p[i].get_vy() + 0.5 * f[1] * dt*dt);
+
+	    p[i].set_vx(p[i].get_vx()+0.5*dt*f[0]);
+	    p[i].set_vy(p[i].get_vy()+0.5*dt*f[1]);
+
+	    vouble f = f_i(p,i,N);
+
+	    p[i].set_vx(p[i].get_vx()+0.5*dt*f[0]);
+	    p[i].set_vy(p[i].get_vy()+0.5*dt*f[1]);
           }
       }
 
