@@ -10,57 +10,53 @@ using namespace std;
 
 
 #include "readin.cpp"
-
+typedef vector<double> vouble; 
 
 class particle 
-	{
-		public:
-		particle()
-			{
-				x = 0.0;
-				y = 0.0;
-				vx = 0.0;
-				vy = 0.0;
-			}
-		~particle(){}
+  {
+    public:
+    particle()
+      {
+        x = 0.0;
+        y = 0.0;
+        vx = 0.0;
+        vy = 0.0;
+      }
+    ~particle(){}
+    
+    void set_x(const double a){x = a;}
+    void set_y(const double a){y = a;}
+    void set_vx(const double a){vx = a;}
+    void set_vy(const double a){vy = a;}
+    
+    double get_x(){return x;}
+    double get_y(){return y;}
+    double get_vx(){return vx;}
+    double get_vy(){return vy;}
 
-		void setx(const double a);
-		void sety(const double a);
-		void setvx(const double a);
-		void setvy(const double a);
-
-		double getx();
-		double gety();
-		double getvx();
-		double getvy();
-
-
-		private:
-		double x,y,vx,vy;
-	};
+    private:
+    double x,y,vx,vy;
+  };
 
 int main()
-{
-vouble a,b;
-int n = 0;
-int m = 0;
+  {
+    vouble pos_x = get_column("posdat2.txt",2,3);
+    vouble pos_y = get_column("posdat2.txt",3,3);
+    vouble vel_x = get_column("veldat2.txt",2,3);
+    vouble vel_y = get_column("veldat2.txt",3,3);
+    int N = pos_x.size(); 
+    particle p[N];
+    for (int i=0;i<N;i++)
+      {
+        p[i].set_x(pos_x[i]);
+        p[i].set_y(pos_y[i]);
+        p[i].set_vx(vel_x[i]);
+        p[i].set_vy(vel_y[i]);
+      }
 
-a = readin(n,"veldat2.txt");
-cout << n << endl;
 
-b = readin(m,"veldat2.txt");
-cout << m << endl;
+    getchar();
+    return 0;
+  }
 
-getchar();
-return 0;
-}
 
-void particle::setx(const double a){x = a;}
-void particle::sety(const double a){y = a;}
-void particle::setvx(const double a){vx = a;}
-void particle::setvy(const double a){vy = a;}
-
-double particle::getx(){return x;}
-double particle::gety(){return y;}
-double particle::getvx(){return vx;}
-double particle::getvy(){return vy;}
