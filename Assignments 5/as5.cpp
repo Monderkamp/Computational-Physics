@@ -88,6 +88,31 @@ vouble f_i(particle *p,int i, int N) // force on particle with index i
       }
     return force;
   }
+double V_pot(particle *p, int N)
+  {
+    double U = 0.0;
+        for (int j=0; j<N;j++)
+          {
+            for (int i=j;i<N;i++)
+     	      {
+                double dx = p[i].get_x() - p[j].get_x();
+                double dy = p[i].get_y() - p[j].get_y();
+    	        if (dx > 7.0) {dx -= 14.0;}
+    	        if (dx < 7.0) {dx += 14.0;}
+    	        if (dy > 7.0) {dy -= 14.0;}
+    	        if (dy < 7.0) {dy += 14.0;}
+
+    	        double dr = sqrt(dx*dx+dy*dy);
+		cout << dr << endl;
+
+    	        if (dr <= cutoff) 
+      	          {
+                    U += 4.0*(pow(dr,-12.0)-pow(dr,-6.0));
+      	          }
+              }
+          }
+    return U;
+  }
 
 int main()
   {
@@ -97,10 +122,10 @@ int main()
     vouble vel_y = get_column("veldat2.txt",3,3);
 
     const int N = pos_x.size(); 
-    const double tmax = 500.0;
+    const double tmax = 10.0;
     double dt = 5e-4;
     const int Nsteps = (int)tmax/dt + 1;
-
+    cout << Nsteps << endl;
     particle *p = new particle[N];
     for (int i=0;i<N;i++)
       {
@@ -109,7 +134,8 @@ int main()
         p[i].set_vx(vel_x[i]);
         p[i].set_vy(vel_y[i]);
       }
-
+    ofstream out("U.txt");
+	
     for (int k=0;k<Nsteps;k++)
       {
         for (int i=0;i<N;i++)
@@ -117,18 +143,31 @@ int main()
 	    vouble f = f_i(p,i,N);
             p[i].set_x(p[i].get_x() + dt*p[i].get_vx() + 0.5 * f[0] * dt*dt);
             p[i].set_y(p[i].get_y() + dt*p[i].get_vy() + 0.5 * f[1] * dt*dt);
+	    
+    	    if (p[i].get_x() > 14.0) {p[i].set_x(p[i].get_x()-14.0);}
+ 	    if (p[i].get_x() < 0.0) {p[i].set_x(p[i].get_x()+14.0);}
+    	    if (p[i].get_y() > 14.0) {p[i].set_y(p[i].get_y()-14.0);}
+ 	    if (p[i].get_y() < 0.0) {p[i].set_y(p[i].get_y()+14.0);}
+
+	    //cout << p[i].get_x() << " " << p[i].get_y() << endl;
+
 
 	    p[i].set_vx(p[i].get_vx()+0.5*dt*f[0]);
 	    p[i].set_vy(p[i].get_vy()+0.5*dt*f[1]);
 
-	    vouble f = f_i(p,i,N);
+	    f = f_i(p,i,N);
 
 	    p[i].set_vx(p[i].get_vx()+0.5*dt*f[0]);
 	    p[i].set_vy(p[i].get_vy()+0.5*dt*f[1]);
           }
+	//out << k << "  " <<V_pot(p,N) << endl;
+	//cout << k << "  " <<V_pot(p,N) << endl;
+	double pot = V_pot(p,N);	
       }
 
+    out.close();
     delete[] p;
+    cout << "done" << endl;
     getchar();
 
     return 0;
