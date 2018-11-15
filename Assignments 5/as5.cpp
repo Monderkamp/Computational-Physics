@@ -95,8 +95,13 @@ int main()
     vouble pos_y = get_column("posdat2.txt",3,3);
     vouble vel_x = get_column("veldat2.txt",2,3);
     vouble vel_y = get_column("veldat2.txt",3,3);
-    int N = pos_x.size(); 
-    particle p[N];
+
+    const int N = pos_x.size(); 
+    const double tmax = 500.0;
+    double dt = 5e-4;
+    const int Nsteps = (int)tmax/dt + 1;
+
+    particle *p = new particle[N];
     for (int i=0;i<N;i++)
       {
         p[i].set_x(pos_x[i]);
@@ -105,7 +110,17 @@ int main()
         p[i].set_vy(vel_y[i]);
       }
 
+    for (int k=0;k<Nsteps;k++)
+      {
+        for (int i=0;i<N;i++)
+          {
+	    vouble f = f_i(p,i,N);
+            p[i].set_x(p[i].get_x() + dt*p[i].get_vx() + 0.5 * f[0] * dt*dt);
+            p[i].set_y(p[i].get_y() + dt*p[i].get_vy() + 0.5 * f[1] * dt*dt);
+          }
+      }
 
+    delete[] p;
     getchar();
 
     return 0;
