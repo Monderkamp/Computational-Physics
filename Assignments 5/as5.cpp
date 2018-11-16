@@ -134,7 +134,7 @@ int main()
 
     const int N = pos_x.size(); 
     const double tmax = 10.0;
-    double dt = 5e-4;
+    double dt = 0.001;
     const int Nsteps = (int)tmax/dt + 1;
     cout << Nsteps << endl;
     particle *p = new particle[N];
@@ -145,8 +145,8 @@ int main()
         p[i].set_vx(vel_x[i]);
         p[i].set_vy(vel_y[i]);
       }
-    ofstream out("U.txt");
-	
+    //ofstream out("U_dt=" + to_string((int)1e4*dt) + "e-4.txt");
+    ofstream out("termodyn_dt=" + to_string(dt) + ".txt");	
     for (int k=0;k<Nsteps;k++)
       {
         for (int i=0;i<N;i++)
@@ -171,15 +171,15 @@ int main()
 	    p[i].set_vx(p[i].get_vx()+0.5*dt*f[0]);
 	    p[i].set_vy(p[i].get_vy()+0.5*dt*f[1]);
           }
-	out << k*dt << "  " <<V_pot(p,N) << endl;
-        cout << k << "  " <<V_pot(p,N) << endl;
+	out << k*dt << "  " << V_pot(p,N) << "  " << T_kin(p,N) << "  " << T_kin(p,N)+V_pot(p,N) << endl;
+	cout << k*dt << "  " << V_pot(p,N) << "  " << T_kin(p,N) << "  " << T_kin(p,N)+V_pot(p,N) << endl;
 	
 		
       }
 
     out.close();
     delete[] p;
-    getchar();
+    //getchar();
 
     return 0;
   }
