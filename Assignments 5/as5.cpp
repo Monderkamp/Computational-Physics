@@ -134,7 +134,7 @@ int main()
 
     const int N = pos_x.size(); 
     const double tmax = 10.0;
-    double dt = 0.001;
+    double dt = 0.0005;
     const int Nsteps = (int)tmax/dt + 1;
     cout << Nsteps << endl;
     particle *p = new particle[N];
