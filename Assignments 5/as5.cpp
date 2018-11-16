@@ -115,6 +115,15 @@ double V_pot(particle *p, int N)
           }
     return U;
   }
+double T_kin(particle *p, int N)
+  {
+    double T = 0.0;
+    for (int i =0;i<N;i++)
+      {
+        T += 0.5*(p[i].get_vx()*p[i].get_vx()+p[i].get_vy()*p[i].get_vy());
+      }
+    return T;   
+  }
 
 int main()
   {
