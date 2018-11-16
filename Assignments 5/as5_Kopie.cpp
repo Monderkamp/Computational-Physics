@@ -40,7 +40,8 @@ class particle
     double x,y,vx,vy;
   };
 
-vouble f_pq(particle p, particle q) // force on particle q from particle p
+vouble f_pq(particle p, particle q) // force on particle q 
+					from particle p
   {
     vouble force(2);
     force[0] = 0.0;
@@ -63,7 +64,8 @@ vouble f_pq(particle p, particle q) // force on particle q from particle p
     return force;
   }
 
-vouble f_i(particle *p,int i, int N) // force on particle with index i
+vouble f_i(particle *p,int i, int N) // force on particle 
+					with index i
   {
     vouble force(2);
     force[0] = 0.0;
@@ -83,8 +85,10 @@ vouble f_i(particle *p,int i, int N) // force on particle with index i
     	    double dr = sqrt(dx*dx+dy*dy);
     	    if (dr <= cutoff) 
       	      {
-        	force[0] += (dx/dr)*(48.0*pow(dr,-13.0)-24.0*pow(dr,-7.0));
-        	force[1] += (dy/dr)*(48.0*pow(dr,-13.0)-24.0*pow(dr,-7.0));
+        	force[0] += (dx/dr)*(48.0*pow(dr,-13.0)
+					-24.0*pow(dr,-7.0));
+        	force[1] += (dy/dr)*(48.0*pow(dr,-13.0)
+					-24.0*pow(dr,-7.0));
       	      }
           }
       }
@@ -120,7 +124,8 @@ double T_kin(particle *p, int N)
     double T = 0.0;
     for (int i =0;i<N;i++)
       {
-        T += 0.5*(p[i].get_vx()*p[i].get_vx()+p[i].get_vy()*p[i].get_vy());
+        T += 0.5*(p[i].get_vx()*p[i].get_vx()+
+		  p[i].get_vy()*p[i].get_vy());
       }
     return T;   
   }
@@ -136,11 +141,12 @@ double P(particle *p, int N)
 	    if (i != j)
 	      {
 	        vouble force_ij = f_pq(p[i],p[j]);
-	        P += (p[i].get_x()-p[j].get_x())*force_ij[0] + (p[i].get_y()-p[j].get_y())*force_ij[1];
+	        P += (p[i].get_x()-p[j].get_x())*force_ij[0] 
+		     + (p[i].get_y()-p[j].get_y())*force_ij[1];
 	      }
 	  }
       }
-    P /= 6.0*14.0*14.0;
+
     P += (2.0/2.0*V)*T_kin(p,N);
     return P;   
   }
@@ -173,8 +179,10 @@ int main()
         for (int i=0;i<N;i++)
           {
 	    vouble f = f_i(p,i,N);
-            p[i].set_x(p[i].get_x() + dt*p[i].get_vx() + 0.5 * f[0] * dt*dt);
-            p[i].set_y(p[i].get_y() + dt*p[i].get_vy() + 0.5 * f[1] * dt*dt);
+            p[i].set_x(p[i].get_x() + dt*p[i].get_vx() 
+		+ 0.5 * f[0] * dt*dt);
+            p[i].set_y(p[i].get_y() + dt*p[i].get_vy() 
+		+ 0.5 * f[1] * dt*dt);
 	    
     	    if (p[i].get_x() > 14.0) {p[i].set_x(p[i].get_x()-14.0);}
  	    if (p[i].get_x() < 0.0) {p[i].set_x(p[i].get_x()+14.0);}
@@ -192,9 +200,12 @@ int main()
 	    p[i].set_vx(p[i].get_vx()+0.5*dt*f[0]);
 	    p[i].set_vy(p[i].get_vy()+0.5*dt*f[1]);
           }
-	out << k*dt << "  " << 2.0*T_kin(p,N)/(3.0*N) << "  " << P(p,N) << "  "<< V_pot(p,N) << "  " << T_kin(p,N) << "  " << T_kin(p,N)+V_pot(p,N) << "  " << endl;
-	cout << k*dt << "  " << 2.0*T_kin(p,N)/(3.0*N) << "  " << P(p,N) << "  "<< V_pot(p,N) << "  " << T_kin(p,N) << "  " << T_kin(p,N)+V_pot(p,N) << "  " << endl;
-	
+	out << k*dt << "  " << 2.0*T_kin(p,N)/(3.0*N) 
+	<< "  " << P(p,N) << "  "<< V_pot(p,N) << "  "
+	<< T_kin(p,N) << "  " << T_kin(p,N)+V_pot(p,N) << "  " << endl;
+	cout << k*dt << "  " << 2.0*T_kin(p,N)/(3.0*N) 
+	<< "  " << P(p,N) << "  "<< V_pot(p,N) << "  "
+	<< T_kin(p,N) << "  " << T_kin(p,N)+V_pot(p,N) << "  " << endl;
 		
       }
 

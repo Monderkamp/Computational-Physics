@@ -1,0 +1,4 @@
+\select@language {english}
+\contentsline {section}{\numberline {1}Exercise 1}{2}{section.1}
+\contentsline {subsection}{\numberline {1.1}Code}{2}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}results}{7}{subsection.1.2}
