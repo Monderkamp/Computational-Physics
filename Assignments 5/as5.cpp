@@ -136,7 +136,7 @@ double P(particle *p, int N)
 	    if (i != j)
 	      {
 	        vouble force_ij = f_pq(p[i],p[j]);
-	        P += (p[i].get_x()-p[j].get_x())*force_ij[0] + (p[i].get_y()-p[j].get_y())*force_ij[1];
+	        P += (p[j].get_x()-p[i].get_x())*force_ij[0] + (p[j].get_y()-p[i].get_y())*force_ij[1];
 	      }
 	  }
       }
@@ -166,8 +166,8 @@ int main()
         p[i].set_vx(vel_x[i]);
         p[i].set_vy(vel_y[i]);
       }
-    //ofstream out("U_dt=" + to_string((int)1e4*dt) + "e-4.txt");
-    ofstream out("termodyn_dt=" + to_string(dt) + ".txt");	
+    //ofstream out("new_U_dt=" + to_string((int)1e4*dt) + "e-4.txt");
+    ofstream out("new_termodyn_dt=" + to_string(dt) + ".txt");	
     for (int k=0;k<Nsteps;k++)
       {
         for (int i=0;i<N;i++)
