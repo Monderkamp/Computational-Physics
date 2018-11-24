@@ -22,10 +22,10 @@ const double V = pow(2.0,sideL);
 typedef vector<double> vouble; 
 
 vouble f_pq(particle p, particle q); // force on particle q from particle p
-vouble f_i(particle p[],int i, int N); // force on particle with index i
-double V_pot(particle *p, int N);
-double T_kin(particle *p, int N);
-double P(particle *p, int N);
+vouble f_i(particle* p,int i, int N); // force on particle with index i
+double V_pot(particle* p, int N);
+double T_kin(particle* p, int N);
+double P(particle* p, int N);
 
 int main()
   {
@@ -34,16 +34,47 @@ int main()
     vouble vel_x = get_column("init_conf.txt",3,5);
     vouble vel_y = get_column("init_conf.txt",4,5);
 
-    //cout << pos_x[1] << endl;
+    const int N = pos_x.size();  
+    /*
+    for (int n=0;n<N;n++)
+        {
+            //cout << pos_x[n] << "    " << pos_y[n] << "    " << vel_x[n] << "    " << vel_y[n] << endl;
+            cout << pos_y[n] << endl;
+        }
+    */
 
-    const int N = pos_x.size(); 
+ 
+  
+    /*
+    double COM_vel_x = 0.0;	
+    double COM_vel_y = 0.0;
+
+    for (int n=0;n<N;n++)
+        {
+            COM_vel_x += vel_x[n];
+            COM_vel_y += vel_y[n];
+        }
+    COM_vel_x/=N;
+    COM_vel_y/=N;
+    cout << "COM_vel_x = " << COM_vel_x << endl;
+    cout << "COM_vel_y = " << COM_vel_y << endl;
+
+    for (int n=0;n<N;n++)
+        {
+        vel_x[n]-= COM_vel_x;
+        vel_y[n]-= COM_vel_y;
+        }
+    */
+
+
+
     cout << "N = " << N << endl;
     double dt = 0.0005;
-    const int Nsteps = 1000;
+    const int Nsteps = 2e4;
     const double tmax = Nsteps * dt;
     cout << "tmax = "<< tmax << endl;
-    //particle *p = new particle[N];
-    particle p[N];
+    particle *p = new particle[N];
+    //particle p[N];
     for (int i=0;i<N;i++)
       {
         p[i].set_x(pos_x[i]);
@@ -57,7 +88,8 @@ int main()
       {
         for (int i=0;i<N;i++)
           {
-	    vouble f = f_i(p,i,N);
+	    vouble f(2);
+	    f = f_i(p,i,N);
             //cout << f[0] << "    " << f[1] << endl;
             p[i].set_x(p[i].get_x() + dt*p[i].get_vx() + 0.5 * f[0] * dt*dt);
             p[i].set_y(p[i].get_y() + dt*p[i].get_vy() + 0.5 * f[1] * dt*dt);
@@ -79,13 +111,13 @@ int main()
 	    p[i].set_vy(p[i].get_vy()+0.5*dt*f[1]);
           }
 	out << k*dt << "  " << 2.0*T_kin(p,N)/(3.0*N) << "  " << P(p,N) << "  "<< V_pot(p,N) << "  " << T_kin(p,N) << "  " << T_kin(p,N)+V_pot(p,N) << "  " << endl;
-	//cout << k*dt << "  " << 2.0*T_kin(p,N)/(3.0*N) << "  " << P(p,N) << "  "<< V_pot(p,N) << "  " << T_kin(p,N) << "  " << T_kin(p,N)+V_pot(p,N) << "  " << endl;
+	cout << k*dt << "  " << 2.0*T_kin(p,N)/(3.0*N) << "  " << P(p,N) << "  "<< V_pot(p,N) << "  " << T_kin(p,N) << "  " << T_kin(p,N)+V_pot(p,N) << "  " << endl;
 	
 		
       }
 
     out.close();
-    //delete[] p;
+    delete[] p;
 
     ofstream outpos("final_positions" + to_string(Nsteps) + ".txt");
     for (int i=0;i<N;i++)
@@ -124,7 +156,7 @@ vouble f_pq(particle p, particle q) // force on particle q from particle p
     return force;
   }
 
-vouble f_i(particle *p,int i, int N) // force on particle with index i
+vouble f_i(particle* p,int i, int N) // force on particle with index i
   {
     vouble force(2);
     force[0] = 0.0;
@@ -134,10 +166,11 @@ vouble f_i(particle *p,int i, int N) // force on particle with index i
       {
         if (j != i)
 	  {
+	    //cout << p[i].get_x() << "    " << p[i].get_y()  << "    " << p[j].get_x()<< "    " << p[j].get_y() << endl;
             double dx = p[i].get_x() - p[j].get_x();
-            double dy = p[i].get_y() - p[j].get_y();
-
-	    cout << dx << "    " << dy << endl;
+            double dy = p[i].get_y() - p[j].get_y();          
+         
+	    //cout << dx << "    " << dy << endl;
 
     	    if (dx > 0.5*sideL) {dx -= sideL;}
     	    if (dx < -0.5*sideL) {dx += sideL;}

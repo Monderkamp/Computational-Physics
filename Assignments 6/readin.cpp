@@ -38,7 +38,7 @@ vouble get_column(string filename,int i,int Ncol)
 		vouble b(Nrows);
 		for (int j=0;j<Nrows;j++)
 			{
-				b[j]=a[3*j+i];
+				b[j]=a[Ncol*j+i];
 			}
 		return b;
 	}
