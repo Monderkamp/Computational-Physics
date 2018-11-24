@@ -34,6 +34,7 @@ class particle
     double get_y(){return y;}
     double get_vx(){return vx;}
     double get_vy(){return vy;}
+    //friend vouble f_i(particle *p,int i, int N); // force on particle with index i
 
     private:
     double x,y,vx,vy;

@@ -8,10 +8,12 @@
 #include <cstdio>
 #include <cstdlib>
 
+using namespace std;
+
+
 #include "readin.cpp"
 #include "particle.hpp"
 
-using namespace std;
 
 const double sideL = 28.0;
 const double cutoff = pow(2.0,1.0/6.0);
@@ -20,7 +22,7 @@ const double V = pow(2.0,sideL);
 typedef vector<double> vouble; 
 
 vouble f_pq(particle p, particle q); // force on particle q from particle p
-vouble f_i(particle *p,int i, int N); // force on particle with index i
+vouble f_i(particle p[],int i, int N); // force on particle with index i
 double V_pot(particle *p, int N);
 double T_kin(particle *p, int N);
 double P(particle *p, int N);
@@ -35,11 +37,13 @@ int main()
     //cout << pos_x[1] << endl;
 
     const int N = pos_x.size(); 
+    cout << "N = " << N << endl;
     double dt = 0.0005;
     const int Nsteps = 1000;
     const double tmax = Nsteps * dt;
     cout << "tmax = "<< tmax << endl;
-    particle *p = new particle[N];
+    //particle *p = new particle[N];
+    particle p[N];
     for (int i=0;i<N;i++)
       {
         p[i].set_x(pos_x[i]);
@@ -54,6 +58,7 @@ int main()
         for (int i=0;i<N;i++)
           {
 	    vouble f = f_i(p,i,N);
+            //cout << f[0] << "    " << f[1] << endl;
             p[i].set_x(p[i].get_x() + dt*p[i].get_vx() + 0.5 * f[0] * dt*dt);
             p[i].set_y(p[i].get_y() + dt*p[i].get_vy() + 0.5 * f[1] * dt*dt);
 	    
@@ -62,7 +67,7 @@ int main()
     	    if (p[i].get_y() > sideL) {p[i].set_y(p[i].get_y()-sideL);}
  	    if (p[i].get_y() < 0.0) {p[i].set_y(p[i].get_y()+sideL);}
 
-	    cout << p[i].get_x() << " " << p[i].get_y() << endl;
+	    //cout << p[i].get_x() << " " << p[i].get_y() << endl;
 
 
 	    p[i].set_vx(p[i].get_vx()+0.5*dt*f[0]);
@@ -80,7 +85,7 @@ int main()
       }
 
     out.close();
-    delete[] p;
+    //delete[] p;
 
     ofstream outpos("final_positions" + to_string(Nsteps) + ".txt");
     for (int i=0;i<N;i++)
@@ -131,12 +136,18 @@ vouble f_i(particle *p,int i, int N) // force on particle with index i
 	  {
             double dx = p[i].get_x() - p[j].get_x();
             double dy = p[i].get_y() - p[j].get_y();
+
+	    cout << dx << "    " << dy << endl;
+
     	    if (dx > 0.5*sideL) {dx -= sideL;}
     	    if (dx < -0.5*sideL) {dx += sideL;}
     	    if (dy > 0.5*sideL) {dy -= sideL;}
     	    if (dy < -0.5*sideL) {dy += sideL;}
 
+
+
     	    double dr = sqrt(dx*dx+dy*dy);
+	    //cout << dr << endl;
     	    if (dr <= cutoff) 
       	      {
         	force[0] += (dx/dr)*(48.0*pow(dr,-13.0)-24.0*pow(dr,-7.0));
