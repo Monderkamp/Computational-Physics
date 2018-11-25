@@ -49,7 +49,7 @@
 %	{\scshape\Large Spezialisierung\par}
 	\vspace{1.5cm}
 %	{\LARGE\bfseries working title\\wedge confinement in LC systems  \par}
-	{\LARGE\bfseries Assignment Sheet Nr. 5\\  \par}
+	{\LARGE\bfseries Assignment Sheet Nr. 6\\  \par}
 	\vspace{1cm}
 	
 	{\large	Paul Monderkamp, Matr.Nr. 2321677\par}
@@ -106,7 +106,7 @@
 %\end{lstlisting}
 
 \newpage
-\subsection{results}
+\subsection{Results}
 
 
 \subsubsection*{b)}
@@ -116,8 +116,11 @@
 {\includegraphics[width=0.7\textwidth]{E(t).png}}		
 \caption{Energy $E(t)$ in the system as a function of time}
 \end{figure}
+
 Figure 1.1 shows the evolution of the energy over the course of the simulation. The graph of the energy of the simulation with the shorter number of steps shows that the simulations with $1000$ and with $2*10^4$ steps merely simulate the initial interval of the longer simulation this shows that the simulation is deterministic and yields at least the same energy evolution given the same initial configuration. \\
-After an initial rapid decrease, the energy relaxes to the energy which is present in the starting configuration, and from there on behaves as conserved. 
+After an initial rapid decrease, the energy relaxes to the energy which is present in the starting configuration, and from there on behaves as conserved. \\
+The length of the step in time for each iteration is equal to $\tau = 0.0005$ such that the time periods of the simulations are equal to $\tau = 0.5$, $\tau = 10$ and $\tau = 20$ respectively. 
+
 \subsubsection*{c),d)}
 \begin{figure}[h!]	
 \centering
@@ -187,28 +190,54 @@ for (int i=0;i<N;i++)
 
   }
 \end{lstlisting}
-%Figure 1.1 and 1.2 show the instantaneous temparature and the pressure in the system as a function of time. The temparature is proportional to the kinetic energy with a factor of $\frac{1}{Nk_B}$. Where $k_B$ is set to one for this plot. \\
-%
-%The pressure is calculated over the virial route with the formula 
-%\begin{equation}
-%P = \frac{Nk_BT}{V} + \frac{1}{6V} \left[ \sum\limits_{i=1}^N  \sum\limits_{j \neq i}^N r_{ij} \cdot f_{ij}\right]
-%\end{equation}
-%and thus is highly dependent on the temparature. \\
-%
-%
-%Figure 1.3 shows the potential energy, the kinetic energy and the total energy in the system as a function of time. 
 
-%\begin{figure}[h!]	
-%\centering
-%{\includegraphics[width=0.7\textwidth]{VTE(t).png}}		
-%\caption{$V(t)$ (purple), $T_{kin}$(t) (turquoise), and $E(t)$ (light blue)}
-%\end{figure}
+\newpage
+
+\subsection{Results}
+
+\subsubsection*{f)}
+
+\begin{figure}[h!]	
+\centering
+{\includegraphics[width=0.7\textwidth]{E(t).png}}		
+\caption{Energy $E(t)$ as given by the symplectic Euler algorithm}
+\end{figure}
 
 
-%\section{Summary/ Prospects}
-%
-%
-%\newpage
+Figure 2.1 shows the contour of the energy as a function of time as given by the symplectic Euler algorithm. The shape of the graph is identical to that in Figure 1.1 and follows the same description. \\
+
+\begin{figure}[h!]	
+\centering
+{\includegraphics[width=0.7\textwidth]{initial_final_pos_1000_SE.png}}		
+\caption{The initial positions and final positions after 1000 steps as given by the symplectic Euler algorithm}
+\end{figure}
+
+\newpage
+
+\begin{figure}[h!]	
+\centering
+{\includegraphics[width=0.7\textwidth]{initial_final_pos_20000_SE.png}}		
+\caption{The initial positions and final positions after 20000 steps as given by the symplectic Euler algorithm}
+\end{figure}
+
+\begin{figure}[h!]	
+\centering
+{\includegraphics[width=0.7\textwidth]{initial_final_pos_40000_SE.png}}		
+\caption{The initial positions and final positions after 40000 steps as given by the symplectic Euler algorithm}
+\end{figure}
+
+Figure 2.2, 2.3 and 2.4 show the initial positions of the particles in turquoise and the final positions after the respetice number of iteration steps in purple. Once again after 1000 iteration steps which corresponds to a system time of $\tau = 0.5$ the particles have hardly propagated whereas after long times the particles distribute approximately uniformly within the simulation box. \\
+\newpage
+
+\begin{figure}[h!]	
+\centering
+{\includegraphics[width=0.7\textwidth]{final_positions_rev_SE.png}}		
+\caption{The initial positions and final positions after 40000 steps as given by the symplectic Euler algorithm}
+\end{figure}
+
+
+Figure 2.5 shows the final positions after time inversion and back propagation of the system. The markers in yellow show the results from propagating $1000$ steps forward and backwards, the turquoise show the results for $2*10^4$ and purple for $4*10^4$. The general shape of the distributions is analogous to the one in section 1, whereas the exact positions of the particles do not match. 
+This disparity, eventhough the system is deterministic and the exact results for the real physics should not depend on the algorithm in practice, supports the hypothesis for numerical errors determining the deviation from perfect time reversibility. 
 
 
 
