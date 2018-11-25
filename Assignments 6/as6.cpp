@@ -70,7 +70,7 @@ int main()
 
     cout << "N = " << N << endl;
     double dt = 0.0005;
-    const int Nsteps = 2e4;
+    const int Nsteps = 4e4;
     const double tmax = Nsteps * dt;
     cout << "tmax = "<< tmax << endl;
     particle *p = new particle[N];
@@ -111,8 +111,14 @@ int main()
 	    p[i].set_vy(p[i].get_vy()+0.5*dt*f[1]);
           }
 	out << k*dt << "  " << 2.0*T_kin(p,N)/(3.0*N) << "  " << P(p,N) << "  "<< V_pot(p,N) << "  " << T_kin(p,N) << "  " << T_kin(p,N)+V_pot(p,N) << "  " << endl;
-	cout << k*dt << "  " << 2.0*T_kin(p,N)/(3.0*N) << "  " << P(p,N) << "  "<< V_pot(p,N) << "  " << T_kin(p,N) << "  " << T_kin(p,N)+V_pot(p,N) << "  " << endl;
+	//cout << k*dt << "  " << 2.0*T_kin(p,N)/(3.0*N) << "  " << P(p,N) << "  "<< V_pot(p,N) << "  " << T_kin(p,N) << "  " << T_kin(p,N)+V_pot(p,N) << "  " << endl;
 	
+        
+	if (k % (Nsteps/100) == 0)
+            {
+                cout << (double)k/Nsteps << endl;
+            }
+           
 		
       }
 
@@ -127,7 +133,7 @@ int main()
     outpos.close();
 
     
-    cout << "fertig!" << endl;
+    cout << "100 und fertig!" << endl;
     getchar();
 
     return 0;
