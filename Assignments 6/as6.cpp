@@ -66,13 +66,17 @@ int main()
         }
     */
 
+    const double dt = 0.0005;
+    const int Nsteps = 1e3;
+    const double tmax = Nsteps * dt;
+
 
 
     cout << "N = " << N << endl;
-    double dt = 0.0005;
-    const int Nsteps = 4e4;
-    const double tmax = Nsteps * dt;
+    cout << "dt = "<< dt << endl;
+    cout << "Nsteps = "<< Nsteps << endl;
     cout << "tmax = "<< tmax << endl;
+
     particle *p = new particle[N];
     //particle p[N];
     for (int i=0;i<N;i++)
@@ -128,7 +132,7 @@ int main()
     ofstream outpos("final_positions" + to_string(Nsteps) + ".txt");
     for (int i=0;i<N;i++)
         {
-            outpos << p[i].get_x() << "    " << p[i].get_y() << endl;        
+            outpos << p[i].get_x() << "    " << p[i].get_y() << p[i].get_vx() << "    " << p[i].get_vy()<< endl;        
         }
     outpos.close();
 
