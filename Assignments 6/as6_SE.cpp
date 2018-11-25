@@ -38,7 +38,7 @@ int main()
 
     cout << "N = " << N << endl;
     double dt = 0.0005;
-    const int Nsteps = 1e3;
+    const int Nsteps = 4e4;
     const double tmax = Nsteps * dt;
     cout << "dt = "<< dt << endl;
     cout << "Nsteps = "<< Nsteps << endl;
@@ -54,29 +54,32 @@ int main()
         p[i].set_vy(vel_y[i]);
       }
     
-    ofstream out("termodyn_Nsteps=" + to_string(Nsteps) + ".txt");	
+    ofstream out("termodyn_SE_Nsteps=" + to_string(Nsteps) + ".txt");	
     for (int k=0;k<Nsteps;k++)
       {
         for (int i=0;i<N;i++)
           {
-	    vouble f(2);
-	    f = f_i(p,i,N);
-            //cout << f[0] << "    " << f[1] << endl;
-            p[i].set_x(p[i].get_x() + dt*p[i].get_vx() + 0.5 * f[0] * dt*dt);
-            p[i].set_y(p[i].get_y() + dt*p[i].get_vy() + 0.5 * f[1] * dt*dt);
-	    
-    	    if (p[i].get_x() > sideL) {p[i].set_x(p[i].get_x()-sideL);}
- 	    if (p[i].get_x() < 0.0) {p[i].set_x(p[i].get_x()+sideL);}
-    	    if (p[i].get_y() > sideL) {p[i].set_y(p[i].get_y()-sideL);}
- 	    if (p[i].get_y() < 0.0) {p[i].set_y(p[i].get_y()+sideL);}
+	      vouble f(2);
+	      f = f_i(p,i,N);
+		              
+	      p[i].set_vx(p[i].get_vx()+dt*f[0]);
+	      p[i].set_vy(p[i].get_vy()+dt*f[1]);
 
-	    p[i].set_vx(p[i].get_vx()+0.5*dt*f[0]);
-	    p[i].set_vy(p[i].get_vy()+0.5*dt*f[1]);
+              p[i].set_x(p[i].get_x() + dt*p[i].get_vx());
+              p[i].set_y(p[i].get_y() + dt*p[i].get_vy());
 
-	    f = f_i(p,i,N);
+    	      if (p[i].get_x() > sideL) {p[i].set_x(p[i].get_x()-sideL);}
+ 	      if (p[i].get_x() < 0.0) {p[i].set_x(p[i].get_x()+sideL);}
+    	      if (p[i].get_y() > sideL) {p[i].set_y(p[i].get_y()-sideL);}
+ 	      if (p[i].get_y() < 0.0) {p[i].set_y(p[i].get_y()+sideL);}
 
-	    p[i].set_vx(p[i].get_vx()+0.5*dt*f[0]);
-	    p[i].set_vy(p[i].get_vy()+0.5*dt*f[1]);
+ 	      /*
+              //cout << f[0] << "    " << f[1] << endl;    
+	      f = f_i(p,i,N);
+	      p[i].set_vx(p[i].get_vx()+0.5*dt*f[0]);
+	      p[i].set_vy(p[i].get_vy()+0.5*dt*f[1]);
+              */
+
           }
 	out << k*dt << "  " << 2.0*T_kin(p,N)/(3.0*N) << "  " << P(p,N) << "  "<< V_pot(p,N) << "  " << T_kin(p,N) << "  " << T_kin(p,N)+V_pot(p,N) << "  " << endl;
         
@@ -91,7 +94,7 @@ int main()
     out.close();
     delete[] p;
 
-    ofstream outpos("final_positions" + to_string(Nsteps) + ".txt");
+    ofstream outpos("final_positions_SE_" + to_string(Nsteps) + ".txt");
     for (int i=0;i<N;i++)
         {
             outpos << p[i].get_x() << "    " << p[i].get_y() << "    " << p[i].get_vx() << "    " << p[i].get_vy()<< endl;        

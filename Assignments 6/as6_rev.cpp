@@ -29,16 +29,48 @@ double P(particle* p, int N);
 
 int main()
   {
-    vouble pos_x = get_column("init_conf.txt",1,5);
-    vouble pos_y = get_column("init_conf.txt",2,5);
-    vouble vel_x = get_column("init_conf.txt",3,5);
-    vouble vel_y = get_column("init_conf.txt",4,5);
+    vouble pos_x = get_column("final_positions40000.txt",0,4);
+    vouble pos_y = get_column("final_positions40000.txt",1,4);
+    vouble vel_x = get_column("final_positions40000.txt",2,4);
+    vouble vel_y = get_column("final_positions40000.txt",3,4);
 
     const int N = pos_x.size();  
+    /*
+    for (int n=0;n<N;n++)
+        {
+            //cout << pos_x[n] << "    " << pos_y[n] << "    " << vel_x[n] << "    " << vel_y[n] << endl;
+            cout << pos_y[n] << endl;
+        }
+    */
+
+ 
+  
+    /*
+    double COM_vel_x = 0.0;	
+    double COM_vel_y = 0.0;
+
+    for (int n=0;n<N;n++)
+        {
+            COM_vel_x += vel_x[n];
+            COM_vel_y += vel_y[n];
+        }
+    COM_vel_x/=N;
+    COM_vel_y/=N;
+    cout << "COM_vel_x = " << COM_vel_x << endl;
+    cout << "COM_vel_y = " << COM_vel_y << endl;
+
+    for (int n=0;n<N;n++)
+        {
+        vel_x[n]-= COM_vel_x;
+        vel_y[n]-= COM_vel_y;
+        }
+    */
+
+
 
     cout << "N = " << N << endl;
-    double dt = 0.0005;
-    const int Nsteps = 1e3;
+    double dt = -0.0005;
+    const int Nsteps = 4e4;
     const double tmax = Nsteps * dt;
     cout << "dt = "<< dt << endl;
     cout << "Nsteps = "<< Nsteps << endl;
@@ -54,7 +86,7 @@ int main()
         p[i].set_vy(vel_y[i]);
       }
     
-    ofstream out("termodyn_Nsteps=" + to_string(Nsteps) + ".txt");	
+    ofstream out("termodyn_rev_Nsteps=" + to_string(Nsteps) + ".txt");	
     for (int k=0;k<Nsteps;k++)
       {
         for (int i=0;i<N;i++)
@@ -70,6 +102,9 @@ int main()
     	    if (p[i].get_y() > sideL) {p[i].set_y(p[i].get_y()-sideL);}
  	    if (p[i].get_y() < 0.0) {p[i].set_y(p[i].get_y()+sideL);}
 
+	    //cout << p[i].get_x() << " " << p[i].get_y() << endl;
+
+
 	    p[i].set_vx(p[i].get_vx()+0.5*dt*f[0]);
 	    p[i].set_vy(p[i].get_vy()+0.5*dt*f[1]);
 
@@ -79,6 +114,8 @@ int main()
 	    p[i].set_vy(p[i].get_vy()+0.5*dt*f[1]);
           }
 	out << k*dt << "  " << 2.0*T_kin(p,N)/(3.0*N) << "  " << P(p,N) << "  "<< V_pot(p,N) << "  " << T_kin(p,N) << "  " << T_kin(p,N)+V_pot(p,N) << "  " << endl;
+	//cout << k*dt << "  " << 2.0*T_kin(p,N)/(3.0*N) << "  " << P(p,N) << "  "<< V_pot(p,N) << "  " << T_kin(p,N) << "  " << T_kin(p,N)+V_pot(p,N) << "  " << endl;
+	
         
 	if (k % (Nsteps/100) == 0)
             {
@@ -91,7 +128,7 @@ int main()
     out.close();
     delete[] p;
 
-    ofstream outpos("final_positions" + to_string(Nsteps) + ".txt");
+    ofstream outpos("final_positions_rev" + to_string(Nsteps) + ".txt");
     for (int i=0;i<N;i++)
         {
             outpos << p[i].get_x() << "    " << p[i].get_y() << "    " << p[i].get_vx() << "    " << p[i].get_vy()<< endl;        
