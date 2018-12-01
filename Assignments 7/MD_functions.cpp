@@ -132,3 +132,21 @@ double P(particle *p, int N)
     P += (2.0/2.0*V)*T_kin(p,N);
     return P;   
   }
+vouble Fges(particle* p, int N)
+    {
+	vouble Fges(2);
+	Fges[0] = 0.0;
+	Fges[1] = 0.0;
+
+	for (int i=0;i<N;i++)
+		{
+			vouble kraft(2);
+			kraft = f_i(p,i,N);
+			
+			Fges[0] += kraft[0];
+			Fges[1] += kraft[1];
+		}
+	//cout << Fges[0] << "    " << Fges[1] << endl;
+        return Fges;
+    }
+    

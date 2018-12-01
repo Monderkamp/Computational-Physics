@@ -82,24 +82,9 @@ int main()
     	    if (p[i].get_y() > sideL) {p[i].set_y(p[i].get_y()-sideL);}
  	    if (p[i].get_y() < 0.0) {p[i].set_y(p[i].get_y()+sideL);}
           }
-	/*
-	vouble Fges(2);
-	Fges[0] = 0.0;
-	Fges[1] = 0.0;
 
-	for (int i=0;i<N;i++)
-		{
-			vouble kraft(2);
-			kraft = f_i(p,i,N);
-			
-			Fges[0] += kraft[0];
-			Fges[1] += kraft[1];
-		}
-	
-	cout << Fges[0] << "    " << Fges[1] << endl;
-	*/
-	double Eges = T_kin(p,N)+V_pot(p,N);
-	out << k*dt << "  " << 2.0*T_kin(p,N)/(3.0*N) << "  " << P(p,N) << "  "<< V_pot(p,N) << "  " << T_kin(p,N) << "  " << Eges << "  " << endl;
+
+	out << k*dt << "  " << 2.0*T_kin(p,N)/(3.0*N) << "  " << P(p,N) << "  "<< V_pot(p,N) << "  " << T_kin(p,N) << "  " << T_kin(p,N)+V_pot(p,N) << "  " << endl;
         
 	if (k % (Nsteps/100) == 0)
             {
