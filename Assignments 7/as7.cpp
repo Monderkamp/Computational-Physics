@@ -20,8 +20,6 @@ const double V = pow(2.0,sideL);
 
 typedef vector<double> vouble; 
 
-
-
 int main()
   {
     vouble pos_x = get_column("init_conf.txt",1,5);
@@ -49,6 +47,7 @@ int main()
         p[i].set_vx(vel_x[i]);
         p[i].set_vy(vel_y[i]);
       }
+
     double alpha = sqrt(144/T_kin(p,N));
 
     for (int i;i<N;i++)
@@ -56,7 +55,6 @@ int main()
             p[i].set_vx(p[i].get_vx()*alpha);
             p[i].set_vy(p[i].get_vy()*alpha);
 	}
-
 
     ofstream out("termodyn_Nsteps=" + to_string(Nsteps) + "_dt=" + to_string(dt) + ".txt");	
     for (int k=0;k<Nsteps;k++)
