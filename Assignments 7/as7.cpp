@@ -10,7 +10,6 @@
 
 using namespace std;
 
-
 #include "readin.cpp"
 #include "particle.hpp"
 #include "MD_functions.hpp"
@@ -31,7 +30,7 @@ int main()
     vouble vel_y = get_column("init_conf.txt",4,5);
 
     const int N = pos_x.size();  
-   
+
     cout << "N = " << N << endl;
     double dt = 0.0005;
     const int Nsteps = 1e3;
@@ -42,6 +41,7 @@ int main()
 
     //particle *p = new particle[N];
     particle p[N];
+
     for (int i=0;i<N;i++)
       {
         p[i].set_x(pos_x[i]);
@@ -106,7 +106,7 @@ int main()
 
     
     cout << "100 und fertig!" << endl;
-
+    getchar();
 
     return 0;
   }
