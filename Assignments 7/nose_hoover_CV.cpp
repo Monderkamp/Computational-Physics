@@ -30,9 +30,16 @@ int main()
     const int N = pos_x.size();  
 
     cout << "N = " << N << endl;
-    double dt = 0.0005;
-    const int Nsteps = 2e4;
-    const double tmax = Nsteps * dt;
+
+
+    const double tmax = 20.0;
+    const int Nsteps = 4e4;
+    double dt = (double)tmax/Nsteps;
+    
+    double Qprime = 1;
+    double T = 1.0;
+    
+    const double Q = Qprime * 2.0*N;
     cout << "dt = "<< dt << endl;
     cout << "Nsteps = "<< Nsteps << endl;
     cout << "tmax = "<< tmax << endl;
@@ -55,25 +62,39 @@ int main()
             p[i].set_vx(p[i].get_vx()*alpha);
             p[i].set_vy(p[i].get_vy()*alpha);
 	}
+    double eta = 0.0;
+    double p_eta = 0.0;
+    vouble p_schlange0(2);
 
-    ofstream out("termodyn_Nsteps=" + to_string(Nsteps) + "_dt=" + to_string(dt) + ".txt");	
+    ofstream out("termodyn_fluc_Nsteps=" + to_string(Nsteps) + "_dt=" + to_string(dt) + ".txt");	
     for (int k=0;k<Nsteps;k++)
       {
+
+	double p_eta_dot_0 = p_eta_dot(p,N,T);
+	double p_eta_imd = p_eta + 0.5*dt*p_eta_dot_0;
+	double exp_fac = exp(-0.5*dt*(1/Q)*p_eta_imd);
+
         for (int i=0;i<N;i++)
           {
 	    vouble f(2);
 	    f = f_i(p,i,N);
-            //cout << f[0] << "    " << f[1] << endl;
-            p[i].set_x(p[i].get_x() + dt*p[i].get_vx() + 0.5 * f[0] * dt*dt);
-            p[i].set_y(p[i].get_y() + dt*p[i].get_vy() + 0.5 * f[1] * dt*dt);
 
-	    p[i].set_vx(p[i].get_vx()+0.5*dt*f[0]);
-	    p[i].set_vy(p[i].get_vy()+0.5*dt*f[1]);
+            p_schlange0[0] = p[i].get_vx()*exp_fac;
+            p_schlange0[1] = p[i].get_vy()*exp_fac;
+
+	    p[i].set_x(p[i].get_x() + dt* p_schlange0[0] + 0.5*dt*dt*f[0]);
+	    p[i].set_y(p[i].get_y() + dt* p_schlange0[1] + 0.5*dt*dt*f[1]);
+            
+            p[i].set_vx(p[i].get_vx()*exp_fac + 0.5*dt*exp_fac*f[0]);
+            p[i].set_vy(p[i].get_vy()*exp_fac + 0.5*dt*exp_fac*f[1]);
 
 	    f = f_i(p,i,N);
 
-	    p[i].set_vx(p[i].get_vx()+0.5*dt*f[0]);
-	    p[i].set_vy(p[i].get_vy()+0.5*dt*f[1]);
+            p[i].set_vx(p[i].get_vx() + 0.5*dt*exp_fac*f[0]);
+            p[i].set_vy(p[i].get_vy() + 0.5*dt*exp_fac*f[1]);
+
+	    eta += (dt/Q)*p_eta +  0.5*dt*dt*(1/Q)*p_eta_dot_0;	 
+            p_eta += 0.5*dt*(p_eta_dot_0 + p_eta_dot(p,N,T));
 
     	    if (p[i].get_x() > sideL) {p[i].set_x(p[i].get_x()-sideL);}
  	    if (p[i].get_x() < 0.0) {p[i].set_x(p[i].get_x()+sideL);}

@@ -13,9 +13,11 @@
 
 using namespace std;
 
-const double sideL = 28.0;
+
+const double sideL = 14.0;
 const double cutoff = pow(2.0,1.0/6.0);
 const double V = pow(2.0,sideL);
+
 
 typedef vector<double> vouble; 
 
@@ -149,4 +151,8 @@ vouble Fges(particle* p, int N)
 	//cout << Fges[0] << "    " << Fges[1] << endl;
         return Fges;
     }
-    
+
+double p_eta_dot(particle* p, int N, double T)
+    {
+        return (2*T_kin(p,N) - 2*N*T);
+    }

@@ -18,3 +18,4 @@ vouble Fges(particle* p, int N);
 double V_pot(particle* p, int N);
 double T_kin(particle* p, int N);
 double P(particle* p, int N);
+double p_eta_dot(particle* p, int N, double T);
