@@ -103,7 +103,7 @@ int main()
           }
 
 
-	out << k*dt << "  " << 2.0*T_kin(p,N)/(3.0*N) << "  " << P(p,N) << "  "<< V_pot(p,N) << "  " << T_kin(p,N) << "  " << T_kin(p,N)+V_pot(p,N) << "  " << endl;
+	out << k*dt << "    " << 2.0*T_kin(p,N)/(3.0*N) << "    " << P(p,N) << "    "<< V_pot(p,N) << "    " << T_kin(p,N) << "    " << T_kin(p,N)+V_pot(p,N) << "    " << endl;
         
 	if (k % (Nsteps/100) == 0)
             {
@@ -125,7 +125,7 @@ int main()
 
     
     cout << "100 und fertig!" << endl;
-    getchar();
+
 
     return 0;
   }
