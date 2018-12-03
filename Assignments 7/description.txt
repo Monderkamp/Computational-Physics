@@ -1,0 +1,21 @@
+7_1)
+
+The results of the simulations are calculated with the different files given in this folder. 
+The class particle with the corresponding header provides the datatype whereas the header MD_functions.hpp with the corresponding definitions in MD_functions.cpp define the calculations of the thermodynamic properties.
+The different graphs show the behaviour according to the coupling strength to the heatbath. where smaller Q' correspond to stronger coupling. 
+- Q' = 100 shows gradual adjustment,
+- Q' = 1 shows how the system jumps to the new temparature and oscillates at the new tempareture relatively quickly. 
+- Q' = 0.01 shows very strong coupling with intense oscillatory behaviour where the system constantly overshoots the temperature. The equilibration to the regime at t = 5 is almost immediately. An oscillation with smaller amplitude can be observed. 
+
+The graphs for the different Q' are attached where the different values for Q' are in the file names. 
+
+7_2)
+
+C_{V,micro} = 1.001474968830889
+C_{V,can} = 4.054291000365722
+
+are the values for the heat capacities according to the formulae given in the exercise sheet. 
+For an ideal gas the heat capacity is equal to (f/2)*N*k_B where f is the degrees of freedom. 
+This system is two dimensional so its natural that the first expression C_V/(N*k_B) should be close to one, which it apparently is. 
+
+The heat capacity for the system in the canonical ensemble is slightly higher but still of the same order of magnitude. 
