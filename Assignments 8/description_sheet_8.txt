@@ -12,7 +12,7 @@ a)
     For r to infinity however the possible r within [r , r + dr] get infinitely close to each other. This results in the physical phenomenon 
     that the different bins in the histogram get similar. Due to the normalization to isotropic density, this results in the limit g(r) -> 1
     for r to \inf. 
-    In statistical physics this can be interpreted as particles' positions being "uncorrolated" for infinite distances. 
+    In statistical physics this can be interpreted as particles' positions being uncorrolated for infinite distances. 
 
 b) 
     View MD_functions.cpp "vouble rdf(particle* p, int N, const double BoxL, const int Nbins)"
@@ -20,14 +20,20 @@ b)
 c) 
 
     i)
-        View "random_conf_g_Nbins=500.png" 
+        The code from which the function rdf(particle* p, int N, const double BoxL, const int Nbins) is called is located in the file "distr_test.cpp".
+        View "random_conf_g_Nbins=500.png" for the graph.
         A random configuration corresponds to isotropic distribution. Due to the normalization all values of g(r) are equal to one. 
         See above. 
     ii)
         The square lattice configuration is taken from the initial configurations of the previous exercises. 
+        The code from which the function rdf(particle* p, int N, const double BoxL, const int Nbins) is called is located in "square_lattice.cpp".
         The particles reside on a square grid with a lattice constant of a = 7/6.
         The analytical results for the possible distances and thus peaks in g(r) can be found via Pythagorean theorem.
         View "square_lattice.png" which shows the first 18 peaks from the measurement of g(r) where the first five peaks are 
         calculated analytically. It can be observed that the results of the analytical calculations coincide with the peaks in the
         measurement of g(r). 
         
+d) 
+    The radial distribution function from the system that is integrated via the Nosé-Hoover thermostat can be observed in "g_nose_hoover.png". 
+    The sampling begins at tau = 1.0; 
+    "ths_en_equil.png" shows the diagram of the energies and it can be observed that the system is well equilibrated beyond tau = 1.0;

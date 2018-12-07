@@ -14,14 +14,18 @@ using namespace std;
 #include "particle.hpp"
 #include "MD_functions.hpp"
 
-const double sideL = 14.0;
-const double cutoff = pow(2.0,1.0/6.0);
-const double V = pow(2.0,sideL);
+
+
+
 
 typedef vector<double> vouble; 
 
 int main()
   {
+    const double sideL = 14.0;
+    const double V = pow(2.0,sideL);
+    const double cutoff = pow(2.0,1.0/6.0);
+
     vouble pos_x = get_column("init_conf.txt",1,5);
     vouble pos_y = get_column("init_conf.txt",2,5);
     vouble vel_x = get_column("init_conf.txt",3,5);
@@ -35,6 +39,10 @@ int main()
     const double tmax = 10.0;
     const int Nsteps = 2e4;
     double dt = (double)tmax/Nsteps;
+
+    const int Nbins = 500;
+    const int Nsample = 1e3;
+    vouble g(Nsample);
     
     double Qprime = 1.0;
     double T = 1.0;
@@ -71,6 +79,21 @@ int main()
       {
 	//if (k*dt >= 5.0) T = 1.0;
 	
+        if (k>= 0.1*Nsteps)
+            {
+                if ((int)(k - 0.1*Nsteps) % (int)(0.9*Nsteps/Nsample) == 0)
+                    {
+                        vouble g_imd(Nsample);
+                        g_imd = rdf(p,N,sideL,Nbins);
+
+                        for (int k=0;k<Nbins;k++)
+                            {
+                                g_imd[k] /= Nsample;
+                                g[k] += g_imd[k];
+                            }
+                    }
+            }        
+
 
 	double p_eta_dot_0 = p_eta_dot(p,N,T);
 	double p_eta_imd = p_eta + 0.5*dt*p_eta_dot_0;
@@ -79,7 +102,7 @@ int main()
         for (int i=0;i<N;i++)
           {
 	    vouble f(2);
-	    f = f_i(p,i,N);
+	    f = f_i(p,i,N,sideL,cutoff);
 
             p_schlange0[0] = p[i].get_vx()*exp_fac;
             p_schlange0[1] = p[i].get_vy()*exp_fac;
@@ -90,7 +113,7 @@ int main()
             p[i].set_vx(p[i].get_vx()*exp_fac + 0.5*dt*exp_fac*f[0]);
             p[i].set_vy(p[i].get_vy()*exp_fac + 0.5*dt*exp_fac*f[1]);
 
-	    f = f_i(p,i,N);
+	    f = f_i(p,i,N,sideL,cutoff);
 
             p[i].set_vx(p[i].get_vx() + 0.5*dt*exp_fac*f[0]);
             p[i].set_vy(p[i].get_vy() + 0.5*dt*exp_fac*f[1]);
@@ -105,7 +128,7 @@ int main()
           }
 
 
-	out << k*dt << "  " << 2.0*T_kin(p,N)/(3.0*N) << "  " << P(p,N) << "  "<< V_pot(p,N) << "  " << T_kin(p,N) << "  " << T_kin(p,N)+V_pot(p,N) << "  " << endl;
+	out << k*dt << "  " << 2.0*T_kin(p,N)/(3.0*N) << "  " << P(p,N,sideL,cutoff) << "  "<< V_pot(p,N,sideL,cutoff) << "  " << T_kin(p,N) << "  " << T_kin(p,N)+V_pot(p,N,sideL,cutoff) << "  " << endl;
         
 	if (k % (Nsteps/100) == 0)
             {
@@ -125,7 +148,14 @@ int main()
         }
     outpos.close();
 
-    
+    ofstream g_out("g_nose_hoover.txt");
+        
+    for (int i=0;i<Nbins;i++)
+        {
+           g_out << i << "    " << (i+0.5)*0.5*sideL/Nbins << "    " << g[i] << endl;
+            //cout << i << "    " << (i+0.5)*0.5*sideL/Nbins << "    " << g[i] << endl;
+        }
+    g_out.close();    
     cout << "100 und fertig!" << endl;
     //getchar();
 

@@ -14,14 +14,14 @@
 using namespace std;
 
 
-const double sideL = 14.0;
-const double cutoff = pow(2.0,1.0/6.0);
-const double V = pow(2.0,sideL);
+//const double sideL = 14.0;
+//const double cutoff = pow(2.0,1.0/6.0);
+//const double V = pow(2.0,sideL);
 
 
 typedef vector<double> vouble; 
 
-vector<double> f_pq(particle p, particle q) // force on particle q from particle p
+vector<double> f_pq(particle p, particle q,const double sideL,const double cutoff) // force on particle q from particle p
   {
     vouble force(2);
     force[0] = 0.0;
@@ -44,7 +44,7 @@ vector<double> f_pq(particle p, particle q) // force on particle q from particle
     return force;
   }
 
-vouble f_i(particle* p,int i, int N) // force on particle with index i
+vouble f_i(particle* p,int i, int N,const double sideL,const double cutoff) // force on particle with index i
   {
     vouble force(2);
     force[0] = 0.0;
@@ -79,7 +79,7 @@ vouble f_i(particle* p,int i, int N) // force on particle with index i
     return force;
   }
 
-double V_pot(particle *p, int N)
+double V_pot(particle *p, int N,const double sideL,const double cutoff)
   {
     double U = 0.0;
         for (int j=0; j<N;j++)
@@ -115,8 +115,9 @@ double T_kin(particle *p, int N)
     return T;   
   }
 
-double P(particle *p, int N)
-  {
+double P(particle *p, int N,const double sideL,const double cutoff)
+  {    
+    double V = sideL*sideL;
     double P = 0.0;
     
     for (int i =0;i<N;i++)
@@ -125,7 +126,7 @@ double P(particle *p, int N)
 	  {
 	    if (i != j)
 	      {
-	        vouble force_ij = f_pq(p[i],p[j]);
+	        vouble force_ij = f_pq(p[i],p[j],sideL,cutoff);
 	        P += (p[j].get_x()-p[i].get_x())*force_ij[0] + (p[j].get_y()-p[i].get_y())*force_ij[1];
 	      }
 	  }
@@ -134,7 +135,7 @@ double P(particle *p, int N)
     P += (2.0/2.0*V)*T_kin(p,N);
     return P;   
   }
-vouble Fges(particle* p, int N)
+vouble Fges(particle* p, int N,const double sideL,const double cutoff)
     {
 	vouble Fges(2);
 	Fges[0] = 0.0;
@@ -143,7 +144,7 @@ vouble Fges(particle* p, int N)
 	for (int i=0;i<N;i++)
 		{
 			vouble kraft(2);
-			kraft = f_i(p,i,N);
+			kraft = f_i(p,i,N,sideL,cutoff);
 			
 			Fges[0] += kraft[0];
 			Fges[1] += kraft[1];
