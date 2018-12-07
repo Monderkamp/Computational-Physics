@@ -195,11 +195,16 @@ vouble rdf(particle* p, int N, const double BoxL, const int Nbins)
                             }
                     }
             }
-
+            double rho = (double) N/(BoxL*BoxL);
         for (int i=0;i<Nbins;i++)
             {
                 //g[i] = g[i]/((N*N)*(2.0*M_PI)*((double)((i+0.5)*BinL))/(BoxL*BoxL));
-                g[i] /= ((N*N)*(2.0*M_PI)*((double)((i+0.5)*BinL))/(BoxL*BoxL));
+                //g[i] /= ((N*N)*(2.0*M_PI)*((double)((i+0.5)*BinL))/(BoxL*BoxL));
+                //double r_i = (double) ((i+0.5)*BinL)
+                double BinArea_i = M_PI*BinL*BinL*(2.0*i+1.0);
+                g[i] /= N-1;
+                g[i] /= (BinArea_i*rho);
+                
             }
 
         return g;

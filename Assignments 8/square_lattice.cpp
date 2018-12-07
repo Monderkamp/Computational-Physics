@@ -22,7 +22,7 @@ int main()
         srand(1);
         const int N = 144;
         particle* p = new particle[N];
-        const int Nsample = 1e4;
+        //const int Nsample = 1e4;
         const int Nbins = 500;
         cout << "Number of bins: " << Nbins << endl;
         vouble g(Nbins);
@@ -32,24 +32,19 @@ int main()
                 g[i] = 0.0;
             }    
 
-        for (int j=0;j<Nsample;j++)
-            {
-                if (j % (Nsample/100) == 0) {cout << (double)j/Nsample << endl;}
-                for (int i=0;i<N;i++)
-                    {
-                        p[i].set_x(rnm()*sideL);
-                        p[i].set_y(rnm()*sideL);
-                    }
-        
-                vouble g_imd(Nbins);
-                g_imd = rdf(p,N,sideL,Nbins);
-                for (int k=0;k<Nbins;k++)
-                    {
-                        g_imd[k] /= Nsample;
-                        g[k] += g_imd[k];
-                    }
+        vouble x_pos(N);
+        vouble y_pos(N);
+        x_pos = get_column("init_conf.txt",1,5);
+        y_pos = get_column("init_conf.txt",2,5);
 
+        for (int i=0;i<N;i++)
+            {
+                p[i].set_x(x_pos[i]);
+                p[i].set_y(y_pos[i]);
             }
+        
+
+        g = rdf(p,N,sideL,Nbins);
 
         ofstream g_out("g.txt");
         
