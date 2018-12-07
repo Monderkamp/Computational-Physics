@@ -22,37 +22,45 @@ int main()
         srand(1);
         const int N = 144;
         particle* p = new particle[N];
-
-        ofstream out("randconf.txt");        
-        for (int i=0;i<N;i++)
-            {
-                p[i].set_x(rnm()*sideL);
-                p[i].set_y(rnm()*sideL);
-                out << p[i].get_x() << "    " << p[i].get_y() << endl;
-                //cout << p[i].get_x() << "    " << p[i].get_y() << endl;
-            }
-        out.close();
-
-        const int Nbins = 30;
-        cout << Nbins << endl;
+        const int Nsample = 1e4;
+        const int Nbins = 200;
+        cout << "Number of bins: " << Nbins << endl;
         vouble g(Nbins);
 
         for (int i=0; i<Nbins;i++)
             {
                 g[i] = 0.0;
-            }     
-        //g = rdf(p,N,sideL,Nbins);
+            }    
+
+        for (int j=0;j<Nsample;j++)
+            {
+                if (j % (Nsample/100) == 0) {cout << (double)j/Nsample << endl;}
+                for (int i=0;i<N;i++)
+                    {
+                        p[i].set_x(rnm()*sideL);
+                        p[i].set_y(rnm()*sideL);
+                    }
+        
+                vouble g_imd(Nbins);
+                g_imd = rdf(p,N,sideL,Nbins);
+                for (int k=0;k<Nbins;k++)
+                    {
+                        g_imd[k] /= Nsample;
+                        g[k] += g_imd[k];
+                    }
+
+            }
 
         ofstream g_out("g.txt");
         
         for (int i=0;i<Nbins;i++)
             {
-                //g_out << i << "    " << g[i] << endl;
-                cout << i << "    " << g[i] << endl;
+                g_out << i << "    " << (i+0.5)*0.5*sideL/Nbins << "    " << g[i] << endl;
+                //cout << i << "    " << (i+0.5)*0.5*sideL/Nbins << "    " << g[i] << endl;
             }
         g_out.close();
 
         delete[] p;
-        getchar();
+        //getchar();
         return 0;
     }

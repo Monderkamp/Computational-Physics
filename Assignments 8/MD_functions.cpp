@@ -164,14 +164,25 @@ vouble rdf(particle* p, int N, const double BoxL, const int Nbins)
             {
                 g[i] = 0.0;
             }
-        
-        double BinL = 0.5*BoxL/Nbins;
+
+        double BinL = (double)0.5*BoxL/Nbins;
+
         for (int i=0;i<N;i++)
             {
                 for (int j=0;j<N;j++)
                     {
                         if (j==i) continue;
-                        double dr = sqrt((p[i].get_x()-p[j].get_x())*(p[i].get_x()-p[j].get_x())+(p[i].get_y()-p[j].get_y())*(p[i].get_y()-p[j].get_y()));
+                        
+                        double dx = p[j].get_x()-p[i].get_x();
+                        if (dx > 0.5*BoxL) {dx -= BoxL;}
+                        if (dx < -0.5*BoxL) {dx += BoxL;}
+
+                        double dy = p[j].get_y()-p[i].get_y();
+                        if (dy > 0.5*BoxL) {dy -= BoxL;}
+                        if (dy < -0.5*BoxL) {dy += BoxL;}
+
+
+                        double dr = sqrt(dx*dx+dy*dy); 
                         //cout << dr << endl;
                         if (dr > 0.5*BoxL) continue;
 
@@ -179,7 +190,7 @@ vouble rdf(particle* p, int N, const double BoxL, const int Nbins)
                             {
                                 if (fabs(dr - (k+0.5)*BinL)< 0.5*BinL)
                                     {
-                                        g[i] += 1.0;
+                                        g[k] += 1.0;
                                     }
                             }
                     }
@@ -187,7 +198,8 @@ vouble rdf(particle* p, int N, const double BoxL, const int Nbins)
 
         for (int i=0;i<Nbins;i++)
             {
-                g[i] = g[i]/((N*N)*(2.0*M_PI)*((i+0.5)*BinL)/(BoxL*BoxL));
+                //g[i] = g[i]/((N*N)*(2.0*M_PI)*((double)((i+0.5)*BinL))/(BoxL*BoxL));
+                g[i] /= ((N*N)*(2.0*M_PI)*((double)((i+0.5)*BinL))/(BoxL*BoxL));
             }
 
         return g;
