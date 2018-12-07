@@ -65,7 +65,7 @@ int main()
 
     double alpha = sqrt(144/T_kin(p,N));
 
-    for (int i;i<N;i++)
+    for (int i=0;i<N;i++)
 	{
             p[i].set_vx(p[i].get_vx()*alpha);
             p[i].set_vy(p[i].get_vy()*alpha);

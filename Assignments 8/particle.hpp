@@ -25,6 +25,16 @@ class particle
         vy = 0.0;
         vz = 0.0;
       }
+
+    particle(const particle& p)
+      {
+        x = p.x;
+        y = p.y;
+        z = p.z;
+        vx = p.vx;
+        vy = p.vy;
+        vz = p.vz;
+      }
     ~particle(){}
     
     void set_x(const double a){x = a;}
