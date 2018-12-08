@@ -45,6 +45,11 @@
         For the function that is used to calculated the MSD, view "double MSD(particle* p0, particle* p, int N, const double BoxL)"
         inside "MD_functions.cpp". The time average is replaced with an ensemble average over the particles using the ergodicity hypothesis. 
         The code for the MD simulation which calls the function above lies within as8.cpp
+    d)
         The plot for the mean squared displacement can be observed in "MSD.png" and the MSD/t² inside "MSD_over_t_squared.png".
         The ballistic regime is located where the mean squared displacement is proportional to t² and thus where MSD/t² is constant. 
         This coincides with the regime where t \in [0, 0.05]. Observing the graph in "MSD.png" it is visible that MSD(t) is of degree one beyond that point. 
+    e) 	
+	For very long times the mean squared displacement in two dimensions is proportional to 4*D*t, therefore sampling the last value 
+	from the simulation data for MSD and dividing by 4*t0 where t0 denotes the simulation time in the data yields the slope of MSD for big times. 
+	In the natural units of the simulation, the diffusion coefficient is then given by 0.0775. 

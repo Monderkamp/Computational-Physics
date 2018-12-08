@@ -31,7 +31,7 @@ int main()
 
     cout << "N = " << N << endl;
     double dt = 0.00005;
-    const int Nsteps = 2e3;
+    const int Nsteps = 1e5;
     const double tmax = Nsteps * dt;
     cout << "dt = "<< dt << endl;
     cout << "Nsteps = "<< Nsteps << endl;
