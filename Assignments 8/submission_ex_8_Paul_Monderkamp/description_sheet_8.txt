@@ -1,0 +1,50 @@
+8.1)
+    a)
+        Since no particles are infinitesimaly close to one another, the radial distribution function should go to zero in the limit r -> 0.
+
+        What the computation of the radial distribution function via numerical methods basically consists of is counting the number of particles
+        that are at a certain distance to one another and creating a histogram as a function of r. 
+
+        However due to the fact that the number of particles in [r , r + dr] scales with the corresponding area one normalizes with an isotropic 
+        distribution which is given by area*(N/A_total).
+
+        Given for instance a square grid on which the particles reside:
+        For small r the possible lie relatively far apart and one sees the distinctive peaks in the structure of g(r).
+        For r to infinity however the possible r within [r , r + dr] get infinitely close to each other. This results in the physical phenomenon 
+        that the different bins in the histogram get similar. Due to the normalization to isotropic density, this results in the limit g(r) -> 1
+        for r to \inf. 
+        In statistical physics this can be interpreted as particles' positions being uncorrolated for infinite distances. 
+
+    b) 
+        View MD_functions.cpp "vouble rdf(particle* p, int N, const double BoxL, const int Nbins)" //where vouble refers to vector<double>
+
+    c) 
+
+        i)
+            The code from which the function rdf(particle* p, int N, const double BoxL, const int Nbins) is called is located in the file "distr_test.cpp".
+            View "random_conf_g_Nbins=500.png" for the graph.
+            A random configuration corresponds to isotropic distribution. Due to the normalization all values of g(r) are equal to one. 
+            See above. 
+        ii)
+            The square lattice configuration is taken from the initial configurations of the previous exercises. 
+            The code from which the function rdf(particle* p, int N, const double BoxL, const int Nbins) is called is located in "square_lattice.cpp".
+            The particles reside on a square grid with a lattice constant of a = 7/6.
+            The analytical results for the possible distances and thus peaks in g(r) can be found via Pythagorean theorem.
+            View "square_lattice.png" which shows the first 18 peaks from the measurement of g(r) where the first five peaks are 
+            calculated analytically. It can be observed that the results of the analytical calculations coincide with the peaks in the
+            measurement of g(r). 
+        
+    d) 
+        The code that calls the function above for this exercise lies inside "nose_hoover.cpp".
+        The radial distribution function from the system that is integrated via the Nosé-Hoover thermostat can be observed in "g_nose_hoover.png". 
+        The sampling begins at tau = 1.0; 
+        "ths_en_equil.png" shows the diagram of the energies and it can be observed that the system is well equilibrated beyond tau = 1.0;
+
+8.2) 
+    a)-c) 
+        For the function that is used to calculated the MSD, view "double MSD(particle* p0, particle* p, int N, const double BoxL)"
+        inside "MD_functions.cpp". The time average is replaced with an ensemble average over the particles using the ergodicity hypothesis. 
+        The code for the MD simulation which calls the function above lies within as8.cpp
+        The plot for the mean squared displacement can be observed in "MSD.png" and the MSD/t² inside "MSD_over_t_squared.png".
+        The ballistic regime is located where the mean squared displacement is proportional to t² and thus where MSD/t² is constant. 
+        This coincides with the regime where t \in [0, 0.05]. Observing the graph in "MSD.png" it is visible that MSD(t) is of degree one beyond that point. 
