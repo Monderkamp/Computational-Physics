@@ -7,4 +7,5 @@ delta_opt = 0.051000000000000
         The interior of the n-sphere, the n+1 ball is defined as B^{n+1} = {x in \mathbb{R}| \norm{x} < r, where r is a real number}.
 
     b) 
-        The volume of a 5-Ball, being the interior of a 4-sphere, a spherical surface embedded in 5 dimensions , is equal to
+        The volume of a 5-Ball is equal to 0.1644934066848226 according to the formula V_5 = \frac{8*pi^2*R^5}{15}
+        According to the Monte-Carlo simulation the volume is equal to 0.164441 with N = 1e8 random points. 
