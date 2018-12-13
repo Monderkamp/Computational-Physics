@@ -1,1 +1,10 @@
 delta_opt = 0.051000000000000
+
+9.2 
+    a) 
+        The general definition of a sphere embedded n+1 dimensions is S^n = {x in \mathbb{R}| \norm{x} = r, where r is a real number}. 
+        The dimension of the sphere itself is n, due to it being a hypersurface. 
+        The interior of the n-sphere, the n+1 ball is defined as B^{n+1} = {x in \mathbb{R}| \norm{x} < r, where r is a real number}.
+
+    b) 
+        The volume of a 5-Ball, being the interior of a 4-sphere, a spherical surface embedded in 5 dimensions , is equal to
