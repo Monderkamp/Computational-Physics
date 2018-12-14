@@ -38,3 +38,13 @@ legend('|\pi_{approx}-\pi| vs delta with N = 1e4')
 
 [M,I] = min(C(:,3))
 C(I,1)
+
+D = C(:,3)
+D = smooth(smooth(smooth(D)))
+figure
+plot(C(:,1),D)
+legend('|\pi_{approx}-\pi| vs delta with N = 1e4')
+
+[M,I] = min(D)
+C(I,1)
+
