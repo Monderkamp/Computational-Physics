@@ -1,0 +1,51 @@
+clear all;
+clc;
+close all;
+
+B = importdata('init_conf.txt');
+
+figure
+scatter(B(:,2),B(:,3),'.');
+legend('initial position','location','northeastoutside')
+axis([0 14 0 14])
+daspect([1 1 1])
+
+msd = importdata('msd_Nsweeps=100_delta=1.000000.txt');
+msd(:,1) = msd(:,1)/144;
+figure 
+loglog(msd(:,1),msd(:,2))
+legend('msd','location','southeast')
+
+finalpos = importdata('finalpos_Nsweeps=100_delta=1.000000.txt');
+figure
+scatter(finalpos(:,1),finalpos(:,2),'.');
+legend('final position','location','northeastoutside')
+axis([0 14 0 14])
+daspect([1 1 1])
+
+acc_rate = zeros(4,2);
+
+acc_rate(1,1) = 0.01; %delta
+acc_rate(1,2) = 0.995556; %rate
+
+acc_rate(2,1) = 0.1; %delta
+acc_rate(2,2) =  0.693889; %rate
+
+acc_rate(3,1) = 0.25; %delta
+acc_rate(3,2) = 0.372639; %rate
+
+acc_rate(4,1) = 0.5; %delta
+acc_rate(4,2) = 0.140278; %rate
+
+acc_rate(5,1) = 1; %delta
+acc_rate(5,2) = 0.0417361; %rate
+
+acc_rate(6,1) = 2; %delta
+acc_rate(6,2) = 0.00722222; %rate
+
+acc_rate(7,1) = 3; %delta
+acc_rate(7,2) = 0.00326389; %rate
+
+accr
+figure 
+plot(acc_rate(:,1),acc_rate(:,2))
