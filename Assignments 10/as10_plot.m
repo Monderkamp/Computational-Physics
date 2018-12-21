@@ -60,7 +60,7 @@ x = x*3/1000;
 plot(acc_rate(:,1),acc_rate(:,2),x,fit(x))
 legend('acceptence rate vs delta','exponential fit of acceptence rate vs delta','location','northeast')
 
-G = importdata('g_Nsweeps=100_delta=0.100000.txt')
+G = importdata('g_Nsweeps=100_delta=0.100000.txt');
 figure
 plot(G(:,2),G(:,3))
 
