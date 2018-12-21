@@ -20,8 +20,9 @@ int main()
         const double cutoff = pow(2.0,1.0/6.0);
         double delta = 0.1;
         const int N = 144;
-        const int Nsweeps = 1e2;
+        const int Nsweeps = 1e4;
         const int Nbins = 200;
+        const int Nsample = 1e5;
 
         const int Nsteps = N*Nsweeps;
         int acceptence = 0;
@@ -51,15 +52,15 @@ int main()
         for (int k=0;k<Nsteps;k++)
             {
 
-                if (k % (Nsteps/1000) == 0)
+                if (k % (Nsteps/Nsample) == 0)
                     {
-                        //cout << (double) k/Nsteps << endl;
+                        cout << (double) k/Nsteps << endl;
                         msd_out << k << "    " << MSD(p0,p,N,sideL) << endl;
 
                         g_imd = rdf(p,N,sideL,Nbins);
                         for (int n=0;n<Nbins;n++) 
                             {
-                                g_imd[n]/=1000;
+                                g_imd[n]/=Nsample;
                                 g[n] += g_imd[n];
                             }
                     }
