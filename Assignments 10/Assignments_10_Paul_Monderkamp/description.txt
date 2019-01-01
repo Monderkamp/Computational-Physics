@@ -1,0 +1,47 @@
+assignments 10
+
+10.1)
+
+    a) 
+        The implementation of the metropolis Monte-Carlo method can be found inside the folder code.
+        The square lattice for the initialisation can be found within "init_conf.txt" which is the initialization
+        for the molecular dynamic simulation from ex. 7. 
+        In this simulation the velocities are not needed.
+    b)
+        The acceptence rate as a function of different step ranges defined by delta can be observed in the plot
+        in 
+        
+        accrate.jpg
+
+        Additionally the orange plot shows an exponential fit which fits the data in blue to a good approximation.
+        The coefficients for the fit function
+
+        acc_rate(delta) =  a*exp(b*delta)
+
+        are 
+        a = 1.0359
+        b = -4.0794
+
+    c)
+        The plots of the mean squared displacements for delta = 0.1, delta = 0.2 can be found within
+        msd_0.1.jpg
+        msd_0.2.jpg
+    d)
+        The virtual diffusion coefficient for the delta = 0.2 is equal to 0.1184
+        whereas 
+        the virtual diffusion coefficient for the delta = 0.1 is equal to 0.0925.
+    e)
+        The pair corrolation function for the system in the canonical ensemble from exercise 8.1 
+        can be observed within 
+
+        g_nose_hoover.png
+
+        The pair corrolation function as measured in the Monte-Carlo simulation can be observed within
+
+        g_from_MC_long.jpg
+
+        It is visible that both graphs represent a reasonable shape for a corrolation function. 
+        g(r) from the molecular dynamics simulation shows more noise which may be due to the amount of sampled 
+        configurations which are used for the generation of the plots. 
+
+        

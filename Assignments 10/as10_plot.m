@@ -1,3 +1,4 @@
+
 clear all;
 clc;
 close all;
@@ -10,11 +11,30 @@ legend('initial position','location','northeastoutside')
 axis([0 14 0 14])
 daspect([1 1 1])
 
-msd = importdata('msd_Nsweeps=100_delta=0.200000.txt');
+msd = importdata('msd_Nsweeps=100_delta=0.100000.txt');
 msd(:,1) = msd(:,1)/144;
+linearfit = fit(msd(750:1029,1),msd(750:1029,2),'poly1')
+
+linearfit_coeffs = coeffvalues(linearfit)
+linearfit_function = @(x) linearfit_coeffs(1)*x + linearfit_coeffs(2)
+
+
 figure 
-loglog(msd(:,1),msd(:,2))
+plot(msd(:,1),msd(:,2),msd(:,1),linearfit_function(msd(:,1)))
 legend('msd','location','southeast')
+
+D = linearfit_coeffs(1)/4
+
+
+
+%{
+msd_ot = msd(:,2)./(msd(:,1))
+figure 
+plot(msd(:,1),msd_ot)
+legend('msd_{ot}','location','southeast')
+%}
+
+
 
 finalpos = importdata('finalpos_Nsweeps=100_delta=0.200000.txt');
 figure
