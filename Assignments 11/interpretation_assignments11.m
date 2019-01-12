@@ -9,7 +9,7 @@ legend('density profile for \mu = 1','location','northeast');
 figure 
 N_evol = importdata('N_evolution_mu=1.000000.txt');
 plot(N_evol(:,1),N_evol(:,2))
-legend('N(t) for \mu = 5','location','northeast');
+legend('N(t) for \mu = 1','location','northeast');
 
 
 figure

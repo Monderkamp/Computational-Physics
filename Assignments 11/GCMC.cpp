@@ -19,13 +19,13 @@ vouble density_profile(vouble conf,double L,double res, int Nbars);
 int main()
     {
         srand(414);
-        const int Nsteps = 1e8;
+        const int Nsteps = 1e6;
         cout << "total number of steps: " << Nsteps << endl;
-        const int Nsample = 1e5;
+        const int Nsample = 1e3;
         cout << "total number of samplings: " << Nsample << endl;
         const double L = 100.0;
         const double sigma = 1.0;
-        const double mu = 1.0; //chemical potential
+        const double mu = 20.0; //chemical potential
         cout << "chemical potential: mu = " << mu << endl;
         const double res = 0.1*sigma;
 
