@@ -1,0 +1,42 @@
+Assignment sheet No. 11:
+
+11.1)
+    a)
+        The code of the Monte-Carlo Simulation for hard rods in 1 dimension is given in the .txt file
+        "GCMC.cpp"
+    b)
+        The plots for the number of particles as a function of Monte-Carlo steps are given in the 
+        files 
+        "N(t)_M=1e6_mu=1.png"
+        "N(t)_M=1e6_mu=5.png"
+        "N(t)_M=1e6_mu=20.png"
+        where t stands for the executed number of Monte-Carlo trials and M is the maximum total number of trials. 
+        A definition of a Monte-Carlo sweep is rather inconvenient since the total number of particles within the 
+        system fluctuates. For the sake of comparability and the consistency of the scaling of the x axes the plots
+        are given as a function of Monte-Carlo trial operations rather than sweeps. 
+
+        It can be seen that with rising chemical potential the average number of particles in the 
+        system rises and the fluctuations decrease. 
+        The former is due to the fact that upon increase of the chemical potential the acceptence probability 
+        for insertion of a particle rises whereas for removal it decreases. 
+
+        Due to the fact that upon increasing number of particles in the system the packing fraction increases linearly 
+        the possible room for fluctuations of the particle number upwards decreases. 
+        The fluctuations of the particle number downwards decreases due to higher probability of greater numbers 
+        of particles. 
+    c,d)
+        The plots for the global densities for different chemical potentials \mu are given in the files
+        "dens_M=1e6_mu=1.png"
+        "dens_M=1e6_mu=5.png"
+        "dens_M=1e6_mu=20.png"    
+        All the plots show distinct peaks that correspond to a high probability of a particle residing at that
+        particular position.
+        Upon increase of the chemical potential the noise in the plots decreases whereas the number of distinct peaks
+        increases.    
+        This is due to the fact that on average a greater number of particles resides in the system and thus on
+        average each particle has physically less space. (In this picture the individual particles do not move, and 
+        new configurations are only generated via removal and insertion of particles, but on average each particle has
+        less space to reappear and thus the fluctuations in the positions are greater.)
+
+        
+        

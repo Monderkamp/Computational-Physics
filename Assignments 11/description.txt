@@ -1,6 +1,0 @@
-Assignment sheet No. 11:
-
-11.1)
-    a)
-        The code of the Monte-Carlo Simulation for hard rods in 1 dimension is given in the .txt file
-        "GCMC.txt"
