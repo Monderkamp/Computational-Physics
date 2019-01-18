@@ -1,0 +1,44 @@
+Assignment sheet 12 
+    12.1
+        a)
+            The derivation of the formula for Widom's method can be found within the document
+            "derivation_Widoms_method_Paul_Monderkamp_sheet12.pdf".
+        b) 
+            The code that is used for this weeks simulations can be found within 
+            "WCA_MC_as12.cpp".
+
+            It is mainly identical to the code from exercise sheet. 
+            The main difference is constituted by the paragraph inside the if statement for the sampling       
+            
+            "if (k % (Nsteps/Nsample) == 0)" 
+                { 
+                    ... 
+                }
+    
+            that begins with 
+            "double trial_x = rnm()*sideL;"
+            and ends with
+            "average_exp_dU += (double)(1.0/Nsample)*exp(-trial_dU/T); "
+            which calculates the canonical expected value inside the formula for the excess part of the 
+            chemical potential.
+        c)
+            The plot that is generated from various values for the chemical potential can be found inside
+            "mu(t).png".
+
+            The explicit values are given as
+
+            T        mu
+            0.001    0.000286533
+            1        -0.0787361
+            1.5      -0.192195
+            2        -0.326766
+            2.5      -0.501348
+            3        -0.67198
+            3.5      -0.88321
+            4        -1.01919
+            6        -1.92522
+            8        -2.73407
+            9        -3.52466
+            10       -4.12948
+
+
