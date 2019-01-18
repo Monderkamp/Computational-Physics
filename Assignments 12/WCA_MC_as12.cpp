@@ -15,11 +15,13 @@ typedef vector<double> vouble;
 
 int main()
     {
+	double density = 0.3;
         srand(1);
         const double sideL = 14.0;
         const double cutoff = pow(2.0,1.0/6.0);
         double delta = 0.1;
-        const int N = 144;
+        const int N = (int) (density*sideL*sideL);
+	cout << "N = " << (int) (density*sideL*sideL) << endl;
         const int Nsweeps = 1e4;
         const int Nbins = 200;
         const int Nsample = 1e5;
@@ -54,7 +56,7 @@ int main()
 
                 if (k % (Nsteps/Nsample) == 0)
                     {
-                        cout << (double) k/Nsteps << endl;
+                        //cout << (double) k/Nsteps << endl;
                         msd_out << k << "    " << MSD(p0,p,N,sideL) << endl;
 
                         g_imd = rdf(p,N,sideL,Nbins);
@@ -73,8 +75,8 @@ int main()
                     cout << "ce == N" << endl;
                     continue;
                     }
-                double dx = (rnm()-1.0)*delta;
-                double dy = (rnm()-1.0)*delta;
+                double dx = (0.5*rnm()-1.0)*delta;
+                double dy = (0.5*rnm()-1.0)*delta;
                 
                 double x_old = p[ce].get_x();
                 double y_old = p[ce].get_y();
