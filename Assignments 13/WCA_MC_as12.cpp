@@ -12,7 +12,9 @@
 
 using namespace std;
 typedef vector<double> vouble;
-
+double muexofT(double T);
+double P_acc_rem(int N,double L, double mu, double T, double U_n, double U_nm);
+double P_acc_ins(int N,double L, double mu, double T, double U_np, double U_n);
 int main()
     {
 	double density = 0.3;
@@ -26,24 +28,24 @@ int main()
 	cout << "sideL = " << sideL << endl;
 
         const int Nsweeps = 1e4;
-        const int Nbins = 200;
-        const int Nsample = 1e5;
+        //const int Nbins = 200;
+        //const int Nsample = 1e5;
         const double T = 1.0;
         cout << "T = " << T << endl;
-        const double mu_ex = mu_ex_of_T(T);
+        const double mu_ex = muexofT(T);
         const int Nsteps = N*Nsweeps;
         int acceptence = 0;
+        int distrNmax = 300;
+        vector<int> N_dis(distrNmax);
+        for (int n =0; n<distrNmax;n++) N_dis[n] = 0;
 
         const double mu_id = -T*log(sideL*sideL/(N+1)); // k_B*T = \lambda = 1;
 
         double average_exp_dU = 0.0;
         const double mu_total = mu_id + mu_ex;
-        particle p[N];
-        particle p0[N];
-        vouble x_pos(N);
-        vouble y_pos(N);
-        //x_pos = get_column("init_conf.txt",1,5);
-        //y_pos = get_column("init_conf.txt",2,5);
+        //const double mu_total = mu_ex;
+
+        vector<particle> p(N);
 
         ofstream init_out("init_Nsweeps=" + to_string(Nsweeps) + "_delta=" + to_string(delta) + ".txt");
 
@@ -51,106 +53,72 @@ int main()
             {
                 p[n].set_x(rnm()*sideL);
                 p[n].set_y(rnm()*sideL);
-                p0[n].set_x(rnm()*sideL);
-                p0[n].set_y(rnm()*sideL);
 
-                //cout << p[n].get_x() << "    " << p[n].get_y() << endl;
                 init_out << p[n].get_x() << "    " << p[n].get_y() << endl;
             }
         init_out.close();
-
-        ofstream msd_out("msd_Nsweeps=" + to_string(Nsweeps) + "_delta=" + to_string(delta) + ".txt");
-        
-
-        vouble g(Nbins);
-        vouble g_imd(Nbins);
-        //vouble rdf(particle* p, int N, const double BoxL, const int Nbins);
+;
         for (int k=0;k<Nsteps;k++)
             {
-                if (k % (Nsteps/100) == 0) cout << (double)k/Nsteps << endl;
+                if (k % (Nsteps/100) == 0) cout << (double) k/Nsteps << endl;
+                double insdel = rnm();
+                particle trial;
+                double U_old = V_pot(p,N,sideL,cutoff);
+                double U_new = 0.0;                
 
-                if (k % (Nsteps/Nsample) == 0)
+                if (insdel <= 0.5)
                     {
-                        //cout << (double) k/Nsteps << endl;
-                        msd_out << k << "    " << MSD(p0,p,N,sideL) << endl;
+                        int ce = (int) rnm()*N;
+                        if (ce == N) continue;
+                        trial.set_x(p[ce].get_x());
+                        trial.set_y(p[ce].get_y());
 
-                        g_imd = rdf(p,N,sideL,Nbins);
-                        for (int n=0;n<Nbins;n++) 
-                            {
-                                g_imd[n]/=Nsample;
-                                g[n] += g_imd[n];
-                            }
-
-                        double trial_x = rnm()*sideL;
-                        double trial_y = rnm()*sideL;
-                        double trial_dU = 0.0;
+                        p[ce].set_x(p[N-1].get_x());
+                        p[ce].set_y(p[N-1].get_y());
+                        p.pop_back();
                         
-                        for (int i=0;i<N;i++)
-     	                    {
-                                double trial_dx = trial_x - p[i].get_x();
-                                double trial_dy = trial_y - p[i].get_y();
-
-    	                        if (trial_dx > 0.5*sideL) {trial_dx -= sideL;}
-    	                        if (trial_dx < -0.5*sideL) {trial_dx += sideL;}
-    	                        if (trial_dy > 0.5*sideL) {trial_dy -= sideL;}
-    	                        if (trial_dy < -0.5*sideL) {trial_dy += sideL;}
-
-    	                        double trial_dr = sqrt(trial_dx*trial_dx+trial_dy*trial_dy);
-		                //cout << dr << endl;
-
-    	                        if (trial_dr <= cutoff) 
-      	                            {
-                                        trial_dU += 4.0*(pow(trial_dr,-12.0)-pow(trial_dr,-6.0)) + 1.0;
-      	                            }
-                            }
-                        average_exp_dU += (double)(1.0/Nsample)*exp(-trial_dU/T);    
-                    }
-
-                double V_old = V_pot(p,N,sideL,cutoff);
-                //cout << V_old << endl;
-                int ce = rnm()*N;
-                //cout << ce << endl;
-                if (ce == N)
-                    {
-                    //cout << "ce == N" << endl;
-                    continue;
-                    }
-                double dx = (0.5*rnm()-1.0)*delta;
-                double dy = (0.5*rnm()-1.0)*delta;
-                
-                double x_old = p[ce].get_x();
-                double y_old = p[ce].get_y();
-
-                p[ce].set_x(p[ce].get_x()+dx);
-                p[ce].set_y(p[ce].get_y()+dy);
-
-                if (p[ce].get_x() > sideL) {p[ce].set_x(p[ce].get_x()- sideL);}
-                if (p[ce].get_x() < 0.0) {p[ce].set_x(p[ce].get_x()+ sideL);}
-
-                if (p[ce].get_y() > sideL) {p[ce].set_y(p[ce].get_y()- sideL);}
-                if (p[ce].get_y() < 0.0) {p[ce].set_y(p[ce].get_y()+ sideL);}
-
-                double dV = V_pot(p,N,sideL,cutoff)-V_old;
-                //cout << dV << endl;
-                if (dV > 0)
-                    {
-                        double w0 = exp(-dV/T);
-                        double w = rnm();
-                        if (w > w0)
+                        U_new = V_pot(p,N-1,sideL,cutoff);
+                        //double P_acc_rem(int N,double L, double mu, double T, double U_n, double U_nm)
+                        if (rnm() > P_acc_rem(N,sideL,mu_total,T,U_old,U_new) ) 
                             {
-                                p[ce].set_x(x_old);
-                                p[ce].set_y(y_old);
+                                p.push_back(trial);
+                                
+                                N_dis[N] ++;
                                 continue;
                             }
+                        else
+                            {
+                                N_dis[N-1] ++;                                
+                                N--;
+                            }
+
                     }
-                acceptence ++;
+              
+                if (insdel > 0.5)
+                    {
+                        particle trial;
+                        trial.set_x(rnm()*sideL);
+                        trial.set_y(rnm()*sideL);
+                        p.push_back(trial);
+                        U_new = V_pot(p,N+1,sideL,cutoff);
+                        //double P_acc_ins(int N,double L, double mu, double T, double U_np, double U_n)
+                        if (rnm() > P_acc_ins(N, sideL, mu_total,T,U_new, U_old) ) 
+                            {
+                                p.pop_back();
+                                N_dis[N] ++;
+                                continue;
+                            }
+                        else
+                            {
+                                N_dis[N+1] ++;                                
+                                N++;
+                            }
+
+
+                    }
             }
-        msd_out.close();
+
         
-        mu_ex = -T*log(average_exp_dU);
-        cout << "T = " << T << endl;
-        cout << "chemical potential: " << mu_id + mu_ex << endl;
-        cout << "mu_ex: " << mu_ex << endl;
 
         cout << "fertig!" << endl;
         cout << "delta = " << delta << ", acceptence rate: " << (double) acceptence/Nsteps << endl;
@@ -162,16 +130,12 @@ int main()
             }
         final_out.close();
 
-    ofstream g_out("g_Nsweeps=" + to_string(Nsweeps) + "_delta=" + to_string(delta) + ".txt");
-        
-    for (int i=0;i<Nbins;i++)
-        {
-           g_out << i << "    " << (i+0.5)*0.5*sideL/Nbins << "    " << g[i] << endl;
-            //cout << i << "    " << (i+0.5)*0.5*sideL/Nbins << "    " << g[i] << endl;
-        }
-    g_out.close(); 
-
-
+        ofstream Ndis_out("Ndis_Nsweeps=" + to_string(Nsweeps) + "_delta=" + to_string(delta) + ".txt");
+        for (int n=0;n<distrNmax;n++)
+            {
+                Ndis_out << n << "    " << N_dis[n] << endl;
+            }
+        Ndis_out.close();
         getchar();
         return 0;
     }
@@ -187,11 +151,11 @@ double P_acc_ins(int N,double L, double mu, double T, double U_np, double U_n)
         return  min(1.0, (double) (L*L*exp(mu/T)*exp(-(U_np-U_n)/T))/(N+1.0));
     }
 
-double P_acc_rem(int N,double L, double mu, double T)
+double P_acc_rem(int N,double L, double mu, double T, double U_n, double U_nm)
     {
-        return  min(1.0, (double) (N*exp(-mu/T)*exp(-(U_n-Unm)/T))/(L*L));
+        return  min(1.0, (double) (N*exp(-mu/T)*exp(-(U_n-U_nm)/T))/(L*L));
     }
-double mu_ex_of_T(double T)
+double muexofT(double T)
     {
         return  (0.8756*T+0.2860);
     }

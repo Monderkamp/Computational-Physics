@@ -92,3 +92,9 @@ a = mu_ex_fit_coeffs(1)
 b = mu_ex_fit_coeffs(2)
 
 f_mu = @(T) -T*log(21.9089*21.9089/(144+1)) + f(T)
+
+
+A = importdata('Ndis_Nsweeps=100_delta=0.100000.txt')
+figure
+plot(A(:,1),A(:,2))
+

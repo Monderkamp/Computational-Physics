@@ -17,7 +17,7 @@ vouble f_i(particle* p,int i, int N,const double sideL,const double cutoff); // 
 vouble Fges(particle* p, int N,const double sideL,const double cutoff);
 vouble rdf(particle* p, int N, const double BoxL, const int Nbins);
 
-double V_pot(particle *p, int N,const double sideL,const double cutoff);
+double V_pot(std::vector<particle> p, int N,const double sideL,const double cutoff);
 double T_kin(particle* p, int N);
 double P(particle *p, int N,const double sideL,const double cutoff);
 double p_eta_dot(particle* p, int N, double T);

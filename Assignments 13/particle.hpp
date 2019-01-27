@@ -26,6 +26,18 @@ class particle
         vz = 0.0;
       }
 
+    particle(double X,double Y,double Z,double VX,double VY,double VZ)
+      {
+        x = X;
+        y = Y;
+        z = Z;
+        vx = VX;
+        vy = VY;
+        vz = VZ;
+      }
+
+
+
     particle(const particle& p)
       {
         x = p.x;

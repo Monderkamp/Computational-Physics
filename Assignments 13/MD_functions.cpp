@@ -79,7 +79,7 @@ vouble f_i(particle* p,int i, int N,const double sideL,const double cutoff) // f
     return force;
   }
 
-double V_pot(particle *p, int N,const double sideL,const double cutoff)
+double V_pot(vector<particle> p, int N,const double sideL,const double cutoff)
   {
     double U = 0.0;
         for (int j=0; j<N;j++)
