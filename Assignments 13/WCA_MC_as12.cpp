@@ -17,16 +17,18 @@ int main()
     {
 	double density = 0.3;
         srand(1);
-        const double sideL = 14.0;
+        //const double sideL = 14.0;
         const double cutoff = pow(2.0,1.0/6.0);
         double delta = 0.1;
-        const int N = (int) (density*sideL*sideL);
-	cout << "N = " << (int) (density*sideL*sideL) << endl;
+        const int N = 144;
+	cout << "N = " << 144 << endl;
+	const double sideL =  sqrt(N/(double)density);
+	cout << "sideL = " << sideL << endl;
 
         const int Nsweeps = 1e4;
         const int Nbins = 200;
         const int Nsample = 1e5;
-        const double T = 3.5;
+        const double T = 1.0;
         cout << "T = " << T << endl;
 
         const int Nsteps = N*Nsweeps;
