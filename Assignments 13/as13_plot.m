@@ -94,7 +94,28 @@ b = mu_ex_fit_coeffs(2)
 f_mu = @(T) -T*log(21.9089*21.9089/(144+1)) + f(T)
 
 
-A = importdata('Ndis_Nsweeps=100_delta=0.100000.txt')
+A = importdata('Ndis_Nsweeps=10000_delta=0.100000_T=1.txt')
 figure
 plot(A(:,1),A(:,2))
+legend('P(N); k_BT = 1','location','northwest')
+xlabel('N')
+ylabel('P(N)')
+
+A = importdata('Ndis_Nsweeps=10000_T=2.000000.txt')
+figure
+plot(A(:,1),A(:,2))
+legend('P(N); k_BT = 2','location','northwest')
+xlabel('N')
+ylabel('P(N)')
+
+A = importdata('Ndis_Nsweeps=10000_T=3.000000.txt')
+figure
+plot(A(:,1),A(:,2))
+legend('P(N); k_BT = 3','location','northwest')
+xlabel('N')
+ylabel('P(N)')
+
+
+
+
 

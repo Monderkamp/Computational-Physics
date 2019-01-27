@@ -30,16 +30,16 @@ int main()
         const int Nsweeps = 1e4;
         //const int Nbins = 200;
         //const int Nsample = 1e5;
-        const double T = 1.0;
+        const double T = 3.0;
         cout << "T = " << T << endl;
         const double mu_ex = muexofT(T);
         const int Nsteps = N*Nsweeps;
         int acceptence = 0;
         int distrNmax = 300;
-        vector<int> N_dis(distrNmax);
+        vector<double> N_dis(distrNmax);
         for (int n =0; n<distrNmax;n++) N_dis[n] = 0;
 
-        const double mu_id = -T*log(sideL*sideL/(N+1)); // k_B*T = \lambda = 1;
+        const double mu_id = -T*log(sideL*sideL/(N+1)); // k_B = \lambda = 1;
 
         double average_exp_dU = 0.0;
         const double mu_total = mu_id + mu_ex;
@@ -83,12 +83,12 @@ int main()
                             {
                                 p.push_back(trial);
                                 
-                                N_dis[N] ++;
+                                N_dis[N] += 1/(double)Nsteps;
                                 continue;
                             }
                         else
                             {
-                                N_dis[N-1] ++;                                
+                                N_dis[N-1] += 1/(double)Nsteps;                            
                                 N--;
                             }
 
@@ -105,12 +105,12 @@ int main()
                         if (rnm() > P_acc_ins(N, sideL, mu_total,T,U_new, U_old) ) 
                             {
                                 p.pop_back();
-                                N_dis[N] ++;
+                                N_dis[N] += 1/(double)Nsteps;
                                 continue;
                             }
                         else
                             {
-                                N_dis[N+1] ++;                                
+                                N_dis[N+1] += 1/(double)Nsteps;                            
                                 N++;
                             }
 
@@ -130,7 +130,7 @@ int main()
             }
         final_out.close();
 
-        ofstream Ndis_out("Ndis_Nsweeps=" + to_string(Nsweeps) + "_delta=" + to_string(delta) + ".txt");
+        ofstream Ndis_out("Ndis_Nsweeps=" + to_string(Nsweeps) + "_T=" + to_string(T) + ".txt");
         for (int n=0;n<distrNmax;n++)
             {
                 Ndis_out << n << "    " << N_dis[n] << endl;
