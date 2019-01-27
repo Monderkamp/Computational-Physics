@@ -20,7 +20,7 @@ int main()
         //const double sideL = 14.0;
         const double cutoff = pow(2.0,1.0/6.0);
         double delta = 0.1;
-        const int N = 144;
+        int N = 144;
 	cout << "N = " << 144 << endl;
 	const double sideL =  sqrt(N/(double)density);
 	cout << "sideL = " << sideL << endl;
@@ -30,14 +30,14 @@ int main()
         const int Nsample = 1e5;
         const double T = 1.0;
         cout << "T = " << T << endl;
-
+        const double mu_ex = mu_ex_of_T(T);
         const int Nsteps = N*Nsweeps;
         int acceptence = 0;
 
         const double mu_id = -T*log(sideL*sideL/(N+1)); // k_B*T = \lambda = 1;
-        double mu_ex = 0.0;
-        double average_exp_dU = 0.0;
 
+        double average_exp_dU = 0.0;
+        const double mu_total = mu_id + mu_ex;
         particle p[N];
         particle p0[N];
         vouble x_pos(N);
@@ -174,4 +174,24 @@ int main()
 
         getchar();
         return 0;
+    }
+
+double min(const double a, const double b)
+    {
+        if (a<b) return a;
+        else return b;
+    }
+
+double P_acc_ins(int N,double L, double mu, double T, double U_np, double U_n)
+    {
+        return  min(1.0, (double) (L*L*exp(mu/T)*exp(-(U_np-U_n)/T))/(N+1.0));
+    }
+
+double P_acc_rem(int N,double L, double mu, double T)
+    {
+        return  min(1.0, (double) (N*exp(-mu/T)*exp(-(U_n-Unm)/T))/(L*L));
+    }
+double mu_ex_of_T(double T)
+    {
+        return  (0.8756*T+0.2860);
     }

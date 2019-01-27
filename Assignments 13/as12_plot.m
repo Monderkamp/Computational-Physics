@@ -90,3 +90,5 @@ disp('a * x + b')
 
 a = mu_ex_fit_coeffs(1)
 b = mu_ex_fit_coeffs(2)
+
+f_mu = @(T) -T*log(21.9089*21.9089/(144+1)) + f(T)
