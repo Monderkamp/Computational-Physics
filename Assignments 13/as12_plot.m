@@ -61,11 +61,32 @@ legend('\mu(T)','location','southwest')
 mu_ex(1,1) = 1;
 mu_ex(1,2) = 1.12184;
 
-mu_ex(2,1) = 2;
-mu_ex(2,2) = 2.07439;
 
-mu_ex(3,1) = 3;
-mu_ex(3,2) = 2.92975;
+mu_ex(2,1) = 1.5;
+mu_ex(2,2) = 1.60867;
+
+mu_ex(3,1) = 2;
+mu_ex(3,2) = 2.07439;
+
+mu_ex(4,1) = 2.5;
+mu_ex(4,2) = 2.5001;
+
+mu_ex(5,1) = 3;
+mu_ex(5,2) = 2.92975;
+
+mu_ex(5,1) = 3.5;
+mu_ex(5,2) = 3.31881;
+
+mu_ex_fit = fit(mu_ex(:,1),mu_ex(:,2),'poly1');
+mu_ex_fit_coeffs = coeffvalues(mu_ex_fit);
+f = @(x) mu_ex_fit_coeffs(2) + mu_ex_fit_coeffs(1) * x;
+a = min(mu_ex(:,1)):0.5:max(mu_ex(:,1));
+
 figure
-plot(mu_ex(:,1),mu_ex(:,2))
-legend('\mu(T)','location','southwest')
+plot(mu_ex(:,1),mu_ex(:,2),a,f(a))
+legend('\mu_{ex}(T)','location','southeast')
+
+disp('a * x + b')
+
+a = mu_ex_fit_coeffs(1)
+b = mu_ex_fit_coeffs(2)

@@ -22,10 +22,12 @@ int main()
         double delta = 0.1;
         const int N = (int) (density*sideL*sideL);
 	cout << "N = " << (int) (density*sideL*sideL) << endl;
+
         const int Nsweeps = 1e4;
         const int Nbins = 200;
         const int Nsample = 1e5;
-        const double T = 1.0;
+        const double T = 3.5;
+        cout << "T = " << T << endl;
 
         const int Nsteps = N*Nsweeps;
         int acceptence = 0;
@@ -146,7 +148,8 @@ int main()
         mu_ex = -T*log(average_exp_dU);
         cout << "T = " << T << endl;
         cout << "chemical potential: " << mu_id + mu_ex << endl;
-        
+        cout << "mu_ex: " << mu_ex << endl;
+
         cout << "fertig!" << endl;
         cout << "delta = " << delta << ", acceptence rate: " << (double) acceptence/Nsteps << endl;
 
