@@ -1,0 +1,14 @@
+exercise sheet 13, Paul Monderkamp
+
+13.1
+	a) 
+		The differet distributions corresponding to states with different particle numbers are visible in
+		"P(N)_T=1.jpg"
+		"P(N)_T=2.jpg"
+		"P(N)_T=3.jpg"
+
+		The probabilities are sampled from relative frequencies in the occurence during the simulation period.
+		In all three plost there is a distinct highest peak visible. It seems upon increasing temperature that side peaks become more distinct. 
+		This leads to the believe that the system may undergo a phase transition close to the given parameters where N may be the ordering parameter 
+		for the coexistence as described in the lecture. 
+		
